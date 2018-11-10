@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'http://ci3.hmvc';
+$config['base_url'] = 'http://localhost/teknisi/Skripsi_Kevin';
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ $config['base_url'] = 'http://ci3.hmvc';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'home';
 
 /*
 |--------------------------------------------------------------------------

@@ -6,33 +6,79 @@ Class model extends CI_Model {
       $this->load->helper(array('form', 'url'));
   }
   
-  public function validate(){
-	  $username = $this->security->xss_clean($this->input->post('username'));
-	  $password = $this->security->xss_clean($this->input->post('password'));
-	  $this->db->where('emailadmin', $username);
-	  $this->db->where('auth', $password);
-	  $query = $this->db->get('admin');
-	  $adm = $query;
-	  $query = $query->result_array();
-	  if(count($query) >0)
-	  {
-		  $row = $adm->row();
-		  $data = array(
-				  'idAdmin' => $row->idAdmin,
-				  'namaAdmin' => $row->namaAdmin,
-				  'alamatAdmin' => $row->alamatAdmin,
-				  'picAdmin' => $row->picAdmin,
-				  'emailAdmin' => $row->emailAdmin,
-				  'status' => $row->status,
-				  'upline' => @$row->upline,
-				  'validated' => true
-				  );
-		  $this->session->set_userdata('logged_in',$data);
-		  return true;
-	  }
-	  return false;
-  }
-  
+    public
+    function validate() {
+    	$username = $this->security->xss_clean( $this->input->post( 'username' ) );
+    	$password = $this->security->xss_clean( $this->input->post( 'password' ) );
+    	$this->db->where( 'username', $username );
+    	$this->db->where( 'password', $password );
+    	$this->db->where( 'status', "0" );
+    	$query = $this->db->get( 'user' );
+    	$adm = $query;
+    	$query = $query->result_array();
+    	if ( count( $query ) > 0 ) {
+    		$row = $adm->row();
+    		$data = array(
+    			'idUser' => $row->idUser,
+    			'role' => $row->role,
+    			'validated' => true
+    		);
+    		$this->session->set_userdata( 'logged_in', $data );
+    		return true;
+    	}
+    	return false;
+    }
+
+    public
+    function getDataBarang($id) {
+		
+		$this->db->where('statusBarang', "0");
+		if(count($id)> 0 && $id != null )
+		{
+		   $this->db->where('idBarang', $id);
+		   $this->db->join('user', 'user.idUser = barang.idUser ');
+		}
+    	return $this->db->get( 'barang' );
+    }
+
+    public
+    function simpanBarang() {
+    	$session_id = $this->session->userdata( 'logged_in' );
+    	$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
+    	$g[ "namaBarang" ] = $this->security->xss_clean( $this->input->post( 'namaBarang' ) );
+    	$g[ "stokBarang" ] = $this->security->xss_clean( $this->input->post( 'stokBarang' ) );
+    	$g[ "statusBarang" ] = "0";
+    	$g[ "timestamp" ] = date( 'YmdHis' );
+    	$g[ "idUser" ] = $session_id[ "idUser" ];
+    	return $this->db->insert( "barang", $g );
+    }
+	
+	public
+	function perbaharuiBarang() {
+		$idBarang =  $this->security->xss_clean( $this->input->post( 'idBarang' ) );
+		$data[ "namaBarang" ] = $this->security->xss_clean( $this->input->post( 'namaBarang' ) );
+		$data[ "stokBarang" ] = $this->security->xss_clean( $this->input->post( 'stokBarang' ) );
+		$this->db->where( 'idBarang', $idBarang );
+		return $this->db->update( 'barang', $data );
+	}
+	
+	public
+	function HapusBarang($idBarang) {
+		$data[ "statusBarang" ] = "1";
+		$this->db->where( 'idBarang', $idBarang );
+		return $this->db->update( 'barang', $data );
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
   function getBanyakMember(){
 		$id = $this->session->userdata('logged_in');
 		$this->db->where('admin.upline', $id['idAdmin']);
@@ -40,44 +86,23 @@ Class model extends CI_Model {
         return  $this->db->get('admin');
     }
 	
-  public function UpdateProfile($user_id){
-	$data["namaAdmin"] = $this->security->xss_clean($this->input->post('namaAdmin'));
-	$data["alamatAdmin"] = $this->security->xss_clean($this->input->post('alamatAdmin'));
-	$data["emailAdmin"] = $this->security->xss_clean($this->input->post('emailAdmin'));
-	$ses = $this->session->set_userdata('logged_in');
-	$datasess = array(
-				  'idAdmin' => $ses['idAdmin'],
-				  'namaAdmin' => $this->input->post('namaAdmin'),
-				  'alamatAdmin' => $this->input->post('alamatAdmin'),
-				  'picAdmin' => $ses['picAdmin'],
-				  'emailAdmin' => $this->input->post('emailAdmin'),
-				  'status' => $ses['status'],
-				  'validated' => true
-				  );
-	$this->session->set_userdata('logged_in',$datasess);
-	$this->db->where('idAdmin', $user_id);
-	return $this->db->update('admin', $data); 
-   }
+  
    
    public function kirimPesan()
    {
 		$session_id = $this->session->userdata('logged_in');
-	    $uplo = $this->do_upload();
-		$g["idPesan"] = "D".date('YmdHis');
+		$g["idPesan"] = $this->security->xss_clean($this->input->post('idPesanan'));
 		$g["timestamp"] =date('YmdHis'); 
-		$g["judulPesan"] = $this->security->xss_clean($this->input->post('judulPesan'));
-		$g["isiPesan"] = $this->security->xss_clean($this->input->post('isiPesan'));
-		$g["idAdmin"] = $session_id["idAdmin"];
-		$g["file"] = $uplo['full_path'];
-		$this->db->insert("pesan", $g);
-	   $email =$this->security->xss_clean($this->input->post('email'));
-	   for($i =0 ;$i<count($email);$i++)
+		$g["description"] = $this->security->xss_clean($this->input->post('description'));
+		$g["idUser"] = $this->security->xss_clean($this->input->post('isiPesan'));
+		$g["status"] = "0";
+		$this->db->insert("pesanan", $g);
+	   $barang =$this->security->xss_clean($this->input->post('barang'));
+	   for($i =0 ;$i<count($barang);$i++)
 	   {
-		  $dapat = explode("|",$email[$i]);
 		  $data["timestamp"] = date('YmdHis'); 
-		  $data["idAdmin"] = $dapat[0];
+		  $data["idPesanan"] = $g["idPesan"];
 		  $data["status"] = '0';
-		  $data["idPesan"] = $g["idPesan"];
 		  $this->db->insert("notifpesan", $data);
 		  $this->email($g["judulPesan"],$g["isiPesan"],$dapat[1],$session_id["namaAdmin"],$uplo);
 	   }
@@ -90,42 +115,10 @@ Class model extends CI_Model {
 	   return true;
    }
    
-   public function getPesan($idpesan)
-   {
-		$id = $this->session->userdata('logged_in');
-	    $this->db->select('notifpesan.`status`,
-							pesan.idPesan,
-							pesan.`timestamp`,
-							pesan.judulPesan,
-							pesan.isiPesan,
-							admin.namaAdmin,
-							pesan.idAdmin,pesan.file
-							');
-							
-		$this->db->from('notifpesan');
-		$this->db->join('pesan', 'notifpesan.idPesan = pesan.idPesan');
-		$this->db->join('admin', 'pesan.idAdmin = admin.idAdmin');
-		$this->db->where('notifpesan.idAdmin', $id['idAdmin']);
-		if($idpesan!= "")
-			$this->db->where('pesan.idPesan',$idpesan);
-		$query = $this->db->get();
-		return $query;
-   }
+
    
    
-   public function simpanMember(){
-		$session_id = $this->session->userdata('logged_in');
-		$g["idAdmin"] = "M".date('YmdHis');
-		$g["timestamp"] =date('YmdHis'); 
-		$g["namaAdmin"] = $this->security->xss_clean($this->input->post('namaAdmin'));
-		$g["alamatAdmin"] = $this->security->xss_clean($this->input->post('alamatAdmin'));
-		$g["emailAdmin"] = $this->security->xss_clean($this->input->post('emailAdmin'));
-		$g["auth"] = $this->security->xss_clean($this->input->post('password'));
-		$g["upline"] = $session_id["idAdmin"];
-		$this->db->insert("admin", $g);
-		return true;
-   }
-    public function do_upload()
+	public function do_upload()
     {
 	  $config['upload_path']          = 'assets/upload/';
 	  $config['allowed_types']        = 'doc|docx';
@@ -143,7 +136,8 @@ Class model extends CI_Model {
 		  return $this->upload->data();
 	  }
    }
-   public function email($subjek, $pesan,$email,$nama,$upl)
+   
+	public function email($subjek, $pesan,$email,$nama,$upl)
     {
 		$url = $_SERVER['HTTP_REFERER'];
 	
@@ -167,6 +161,7 @@ Class model extends CI_Model {
 		$this->email->attach($upl['full_path']);
 		$this->email->send();
 	}
+
 	public function getKirimUlang($idpesan)
    {
 		$id = $this->session->userdata('logged_in');

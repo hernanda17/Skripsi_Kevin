@@ -1,8 +1,9 @@
-<html lang="en"><head>
+<html lang="en">
+	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>APLIKASI AUTOMATIS EMAIL ADIRA</title>
+	<title>APLIKASI TEKNISI</title>
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url();?>assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -43,7 +44,7 @@
 	<!-- Main navbar -->
 	<div class="navbar navbar-inverse">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="index.html">APLIKASI AUTO EMAIL</a>
+			<a class="navbar-brand" href="<?php echo base_url();?>index.php/home">APLIKASI TEKNISI</a>
 
 			<ul class="nav navbar-nav pull-right visible-xs-block">
 				<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -62,60 +63,6 @@
             
 			<ul class="nav navbar-nav navbar-right">
 					<div class="dropdown-menu dropdown-content">
-						<div class="dropdown-content-heading">
-							Users online
-							<ul class="icons-list">
-								<li><a href="#"><i class="icon-gear"></i></a></li>
-							</ul>
-						</div>
-
-						<ul class="media-list dropdown-content-body width-300">
-							<li class="media">
-								<div class="media-left"><img src="<?php echo base_url();?>assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-								<div class="media-body">
-									<a href="#" class="media-heading text-semibold">Jordana Ansley</a>
-									<span class="display-block text-muted text-size-small">Lead web developer</span>
-								</div>
-								<div class="media-right media-middle"><span class="status-mark border-success"></span></div>
-							</li>
-
-							<li class="media">
-								<div class="media-left"><img src="<?php echo base_url();?>assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-								<div class="media-body">
-									<a href="#" class="media-heading text-semibold">Will Brason</a>
-									<span class="display-block text-muted text-size-small">Marketing manager</span>
-								</div>
-								<div class="media-right media-middle"><span class="status-mark border-danger"></span></div>
-							</li>
-
-							<li class="media">
-								<div class="media-left"><img src="<?php echo base_url();?>assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-								<div class="media-body">
-									<a href="#" class="media-heading text-semibold">Hanna Walden</a>
-									<span class="display-block text-muted text-size-small">Project manager</span>
-								</div>
-								<div class="media-right media-middle"><span class="status-mark border-success"></span></div>
-							</li>
-
-							<li class="media">
-								<div class="media-left"><img src="<?php echo base_url();?>assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-								<div class="media-body">
-									<a href="#" class="media-heading text-semibold">Dori Laperriere</a>
-									<span class="display-block text-muted text-size-small">Business developer</span>
-								</div>
-								<div class="media-right media-middle"><span class="status-mark border-warning-300"></span></div>
-							</li>
-
-							<li class="media">
-								<div class="media-left"><img src="<?php echo base_url();?>assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-								<div class="media-body">
-									<a href="#" class="media-heading text-semibold">Vanessa Aurelius</a>
-									<span class="display-block text-muted text-size-small">UX expert</span>
-								</div>
-								<div class="media-right media-middle"><span class="status-mark border-grey-400"></span></div>
-							</li>
-						</ul>
-
 						<div class="dropdown-content-footer">
 							<a href="#" data-popup="tooltip" title="" data-original-title="All users"><i class="icon-menu display-block"></i></a>
 						</div>
@@ -130,7 +77,7 @@
 						<span><?php if($this->session->userdata('logged_in'))
 									{
 										$session_id = $this->session->userdata('logged_in');
-										echo $session_id["namaAdmin"];
+										echo $session_id["idUser"];
 									}else
 									{
 										echo "Nama Admin";
@@ -172,7 +119,7 @@
                                     <?php if($this->session->userdata('logged_in'))
 									{
 										$session_id = $this->session->userdata('logged_in');
-										echo $session_id["namaAdmin"];
+										echo $session_id["idUser"];
 									}else
 									{
 										echo "Nama Admin";
@@ -181,12 +128,24 @@
                                     </span>
 									<div class="text-size-mini text-muted">
 										<i class="icon-mail5"></i>     
-										<?php if($this->session->userdata('logged_in'))
-									{
-										echo $session_id["emailAdmin"];
+										<?php 
+										if($this->session->userdata('logged_in'))
+										{
+											$role = $this->session->userdata('logged_in')["role"]; 
+	
+											if($role == "0")
+											{
+												echo "Gudang";
+											}else if($role == "1")
+											{
+												echo "Teknisi";
+											}elseif($role == "2")
+											{
+												echo "Kepala Teknisi";
+											}
 									}else
 									{
-										echo "Email Admin";
+										echo "Role User";
 									}
 									?>
 									</div>
@@ -210,11 +169,51 @@
 						<div class="category-content no-padding">
 							<ul class="navigation navigation-main navigation-accordion">
 
-								<!-- Main -->
-								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="" data-original-title="Main pages"></i></li>
-								<li><a href="<?php echo base_url();?>index.php/home/openPageBeranda"><i class="icon-home4"></i> <span>BERANDA</span></a></li>
-								<li><a href="<?php echo base_url();?>index.php/home/openPageEmail"><i class="icon-mailbox"></i> <span>KIRIM EMAIL</span></a></li>
-								<li><a href="<?php echo base_url();?>index.php/home/openPageMember"><i class="icon-users"></i> <span>MEMBER</span></a></li>
+								<!-- Main DISINI ROLE MENU-->
+								<li class="navigation-header">
+									<span>Main</span> 
+									<i class="icon-menu" title="" data-original-title="Main pages"></i>
+								</li>
+							
+								<li><a href="<?php echo base_url();
+									?>index.php/home/">
+									<i class="icon-home4"></i> 
+									<span>BERANDA</span></a>
+								</li>
+								<?php 
+								//get role
+								$role = $this->session->userdata('Role'); 
+								if($role == "1")
+								{
+								?>
+								<li><a href="<?php echo base_url();
+									?>index.php/home/Report">
+									<i class="icon-mailbox"></i> 
+									<span>Report</span></a>
+								</li>
+								<?php }
+								if($role == "2")
+								{
+								?>
+								<li><a href="<?php echo base_url();
+									?>index.php/home/Barang">
+									<i class="icon-users"></i> 
+									<span>Barang</span></a>
+								</li>
+								<?php 
+								}
+								if($role == "3")
+								{
+								?>
+								
+								<li><a href="<?php echo base_url();
+									?>index.php/home/Barang">
+									<i class="icon-users"></i> 
+									<span>Barang</span></a>
+								</li>
+								<?php 
+								}
+								?>
 							</ul>
 						</div>
 					</div>
@@ -232,15 +231,7 @@
 				<div class="page-header">
 					<div class="page-header-content">
 						<div class="page-title">
-							<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">AUTO EMAIL</span></h4>
-						</div>
-
-						<div class="heading-elements">
-							<div class="heading-btn-group">
-								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
-								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
-								<a href="#" class="btn btn-link btn-float has-text"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
-							</div>
+							<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Teknisi</span></h4>
 						</div>
 					<a class="heading-elements-toggle"><i class="icon-menu"></i></a></div>
 
