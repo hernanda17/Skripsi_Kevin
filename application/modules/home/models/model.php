@@ -69,51 +69,92 @@ Class model extends CI_Model {
 		return $this->db->update( 'barang', $data );
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-  function getBanyakMember(){
-		$id = $this->session->userdata('logged_in');
-		$this->db->where('admin.upline', $id['idAdmin']);
-		$this->db->or_where('admin.idAdmin', $id['upline']);
-        return  $this->db->get('admin');
+	public
+    function getDataPesanan($idPesanan) {
+		
+		$id = $this->session->userdata('logged_in')['idUser'];
+		$this->db->where('idUser', $id);
+		if(count($idPesanan)> 0 && $idPesanan != null )
+		{
+		   $this->db->where('idPesanan', $idPesanan);
+		   //$this->db->join('user', 'user.idUser = barang.idUser ');
+		}
+    	return $this->db->get( 'pesanan' );
     }
 	
-  
-   
-   public function kirimPesan()
-   {
-		$session_id = $this->session->userdata('logged_in');
-		$g["idPesan"] = $this->security->xss_clean($this->input->post('idPesanan'));
-		$g["timestamp"] =date('YmdHis'); 
-		$g["description"] = $this->security->xss_clean($this->input->post('description'));
-		$g["idUser"] = $this->security->xss_clean($this->input->post('isiPesan'));
-		$g["status"] = "0";
-		$this->db->insert("pesanan", $g);
-	   $barang =$this->security->xss_clean($this->input->post('barang'));
-	   for($i =0 ;$i<count($barang);$i++)
-	   {
-		  $data["timestamp"] = date('YmdHis'); 
-		  $data["idPesanan"] = $g["idPesan"];
-		  $data["status"] = '0';
-		  $this->db->insert("notifpesan", $data);
-		  $this->email($g["judulPesan"],$g["isiPesan"],$dapat[1],$session_id["namaAdmin"],$uplo);
-	   }
-	    $data["timestamp"] = date('YmdHis'); 
-		$data["idAdmin"] = $session_id["idAdmin"];
-		$data["status"] = '0';
-		$data["idPesan"] = $g["idPesan"] ;
-		$this->db->insert("notifpesan", $data);
-		$this->email($g["judulPesan"],$g["isiPesan"],$session_id["emailAdmin"],$session_id["namaAdmin"],$uplo);
-	   return true;
-   }
+	public
+    function getDataPesananDetail($idPesanan) {
+		
+		$id = $this->session->userdata('logged_in')['idUser'];
+	    $this->db->select(' pesanan.idPesanan,
+							pesanan.idUser,
+							pesanan.`timestamp`,
+							pesanan.`status`,
+							pesanan.timeapproval,
+							pesanan.description,
+							`user`.username');
+		$this->db->distinct();
+		$this->db->where('`pesanandetail`.idPesanan', $idPesanan);
+		$this->db->join('pesanan', 'pesanandetail.idPesanan = pesanan.idPesanan');
+		$this->db->join('`user`', 'pesanan.idUserApproval = `user`.idUser ', 'left');
+    	return $this->db->get( 'pesanandetail' );
+    }
+	
+	public
+    function getDataPesananBarang($idPesanan) {
+		
+		$id = $this->session->userdata('logged_in')['idUser'];
+	    $this->db->select(' barang.idBarang,
+							barang.namaBarang,
+							pesanandetail.qty');
+		$this->db->where('`pesanandetail`.idPesanan', $idPesanan);
+		$this->db->join('pesanandetail', 'barang.idBarang = pesanandetail.idBarang');
+    	return $this->db->get( 'barang' );
+    }
+	
+    public
+    function tambahDataPesananBarang() {
+    	$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
+    	$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
+    	$g[ "qty" ] = $this->security->xss_clean( $this->input->post( 'qty' ) );
+		$this->db->insert( "pesanandetail", $g );
+    	return true;
+    }
+	
+	public
+	function getDataPesananDetailUser() {
+
+		$id = $this->security->xss_clean( $this->input->post( 'idRFID' ) );
+		$this->db->select( '`pesanan`.`idPesanan`,
+							`pesanan`.`timestamp`,
+							`pesanan`.`status`,
+							`pesanan`.`timeapproval`,
+							`pesanan`.`description`,
+							`pesanan`.`idUser`,
+							`user`.username ' );
+		$this->db->where( 'user.idRFId', $id );
+		$this->db->join( 'user', 'pesanan.idUser = user.`idUser` ');
+		return $this->db->get( 'pesanan' );
+	}
+
+	public
+	function getDataPesananBarangUser() {
+
+		$id = $this->security->xss_clean( $this->input->post( 'idRFID' ) );
+		$this->db->select( 'barang.idBarang,
+							barang.namaBarang,
+							pesanandetail.qty' );
+		$this->db->where( '`user`.idRFID', $id );
+		$this->db->join( 'pesanandetail', 'pesanandetail.idPesanan = pesanan.idPesanan' );
+		$this->db->join( 'barang', 'pesanandetail.idBarang = barang.idBarang' );
+		$this->db->join( '`user`', 'user.idUser = pesanan.idUser' );
+		return $this->db->get( 'pesanan' );
+	}
+	
+	
+	
+	
+	
    
 
    
@@ -160,32 +201,6 @@ Class model extends CI_Model {
 		$this->email->message($pesan);
 		$this->email->attach($upl['full_path']);
 		$this->email->send();
-	}
-
-	public function getKirimUlang($idpesan)
-   {
-		$id = $this->session->userdata('logged_in');
-	    $this->db->select('admin.emailAdmin,
-							pesan.isiPesan,
-							pesan.judulPesan');
-							
-		$this->db->from('pesan');
-		$this->db->join('notifpesan', 'notifpesan.idPesan = pesan.idPesan ');
-		$this->db->join('admin', 'notifpesan.idAdmin = admin.idAdmin');
-		$this->db->where('pesan.idPesan',$idpesan);
-		$query = $this->db->get();
-		return $query;
-   }
-	
-	public function kirimUlang($id)
-	{
-		$session_id = $this->session->userdata('logged_in');
-		$pesan = $this->getKirimUlang($id);
-		foreach ($pesan->result() as $row)
-        {
-		  $this->email($row->judulPesan,$row->isiPesan,$row->emailAdmin,$session_id["namaAdmin"]);
-		}
-		return true;
 	}
 }
 ?>

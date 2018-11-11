@@ -19,9 +19,9 @@ class home extends MX_Controller {
 			if ( $role == "0" ) {
 				$barang = $this->model->getDataBarang(null);
 				$data[ 'barang' ] = $barang;
-			} else {
-				$barang = $this->model->getDataBarang(null);
-				$data[ 'barang' ] = $barang;
+			} else if ( $role == "1" ){
+				$pesanan = $this->model->getDataPesanan(null);
+				$data[ 'pesanan' ] = $pesanan;
 			}
 			$this->load->view( 'beranda', $data );
 		} else
@@ -57,7 +57,15 @@ class home extends MX_Controller {
 	function openPageBeranda() {
 		$this->load->view( 'header' );
 		if ( $this->session->userdata( 'logged_in' ) ) {
-			$this->load->view( 'beranda' );
+			$role = $this->session->userdata( 'logged_in' )[ 'role' ];
+			if ( $role == "0" ) {
+				$barang = $this->model->getDataBarang(null);
+				$data[ 'barang' ] = $barang;
+			} else {
+				$barang = $this->model->getDataBarang(null);
+				$data[ 'barang' ] = $barang;
+			}
+			$this->load->view( 'beranda', $data );
 		} else
 			$this->load->view( 'Login' );
 	}
@@ -75,6 +83,18 @@ class home extends MX_Controller {
 		$this->load->view( 'header' );
 		$this->load->view( 'bukaPesan', $data );
 	}
+	
+	public
+	function openPesananDetail() {
+		$detailPesanan = $this->model->getDataPesananDetail( $this->uri->segment( 3 ) );
+		$detailBarang = $this->model->getDataPesananBarang( $this->uri->segment( 3 ) );
+		$barang = $this->model->getDataBarang( null );
+		$data[ 'pesananDetail' ] = $detailPesanan;
+		$data[ 'pesananBarang' ] = $detailBarang;
+		$data[ 'barang' ] = $barang;
+		$this->load->view( 'header' );
+		$this->load->view( 'bukaPesananDetail', $data );
+	}
 
 	public
 	function process() {
@@ -82,7 +102,16 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->Login();
 		} else {
-			$this->openPageBeranda();
+			$this->load->view( 'header' );
+			$role = $this->session->userdata( 'logged_in' )[ 'role' ];
+			if ( $role == "0" ) {
+				$barang = $this->model->getDataBarang(null);
+				$data[ 'barang' ] = $barang;
+			} else if ( $role == "1" ){
+				$pesanan = $this->model->getDataPesanan(null);
+				$data[ 'pesanan' ] = $pesanan;
+			}
+			$this->load->view( 'beranda', $data );
 		}
 	}
 
@@ -90,11 +119,40 @@ class home extends MX_Controller {
 	function processKirimPesan() {
 		$result = $this->model->kirimPesan();
 		if ( !$result ) {
-			$this->status( "Kirim Pesan", "Kirim Pesan Gagal" );
+			$this->status( "Kirim Pesan", "Kirim Pesan Gagal (ID pesanan telah digunakan)" );
 		} else {
 			$this->status( "Kirim Pesan", "Kirim Pesan Berhasil" );
 		}
 	}
+	
+	public
+	function confirmation() {
+		
+		$this->load->view( 'headerExBar' );
+		$this->load->view( 'confirmation' );
+	}
+	
+	public
+	function openPesananDetailConfirmation() {
+		$detailPesanan = $this->model->getDataPesananDetailUser();
+		$detailBarang = $this->model->getDataPesananBarangUser();
+		$data[ 'pesananDetail' ] = $detailPesanan;
+		$data[ 'pesananBarang' ] = $detailBarang;
+		$this->load->view( 'header' );
+		$this->load->view( 'bukaPesananDetailUser', $data );
+	}
+	
+	public
+	function procesDataBarangPesanan() {
+		$result = $this->model->tambahDataPesananBarang();
+		if ( !$result ) {
+			$this->status( "Data Barang", "Stok barang tidak mencukupi" );
+		} else {
+			$this->status( "Data Barang", "Tambah barang sukses" );
+		}
+	}
+	
+	
 
 	public
 	function do_logout() {

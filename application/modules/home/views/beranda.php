@@ -8,119 +8,6 @@
 	<div class="row">
 		<?php 
 	  $role = $userdata['role'];?>
-		<!--Gudang-->
-		<?php if($role =="0")
-		  {
-	  ?>
-		<div class="col-lg-4">
-			<div class="panel bg-teal-400">
-				<div class="panel-body">
-					<div class="heading-elements">
-						<ul class="icons-list">
-							<li class="dropdown">
-								<i class="icon-user-plus"></i>
-								</span>
-							</li>
-						</ul>
-					</div>
-					<h3 class="no-margin">
-						<?php echo count($barang); ?>
-					</h3>
-					Banyak Barang
-					<div class="text-muted text-size-small">-</div>
-					<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
-				</div>
-
-				<div class="container-fluid">
-					<div id="members-online"></div>
-				</div>
-			</div>
-		</div>
-		<?php 			  
-		  }
-?>
-
-		<!--Teknisi Dan kepala teknisi-->
-		<?php 
-		  if($role =="1"|| $role == "2")
-		  {
-	  ?>
-
-		<div class="col-lg-4">
-			<div class="panel bg-teal-400">
-				<div class="panel-body">
-					<div class="heading-elements">
-						<ul class="icons-list">
-							<li class="dropdown">
-								<i class="icon-user-plus"></i>
-								</span>
-							</li>
-						</ul>
-					</div>
-					<h3 class="no-margin">
-						<?php echo @$pesanan; ?>
-					</h3>
-					Banyak Pesanan
-					<div class="text-muted text-size-small">-</div>
-					<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
-				</div>
-
-				<div class="container-fluid">
-					<div id="members-online"></div>
-				</div>
-			</div>
-		</div>
-		<?php 			  
-		  }
-?>
-
-
-		<div class="col-lg-4">
-			<div class="panel bg-pink-400">
-				<div class="panel-body">
-					<div class="heading-elements">
-						<ul class="icons-list">
-							<li class="dropdown">
-								<i class="icon-cog3"></i>
-							</li>
-						</ul>
-					</div>
-
-					<h3 class="no-margin">11</h3> Banyak E-mail
-					<div class="text-muted text-size-small">-</div>
-					<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
-				</div>
-
-				<div id="server-load">
-				</div>
-			</div>
-			<!-- /current server load -->
-
-		</div>
-
-		<div class="col-lg-4">
-			<div class="panel bg-blue-400">
-				<div class="panel-body">
-					<div class="heading-elements">
-						<ul class="icons-list">
-							<li class="dropdown">
-								<i class="icon-cog3"></i>
-							</li>
-						</ul>
-					</div>
-
-					<h3 class="no-margin"></h3>
-					kosong
-					<div class="text-muted text-size-small">-</div>
-					<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
-				</div>
-
-				<div id="server-load">
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!--Tampilan Beranda Gudang-->
 
 	<?php if($role =="0"){?>
@@ -162,11 +49,6 @@
 									<a href="#" class="btn bg-teal-400 btn-rounded btn-icon btn-xs">
                                     <span class="letter-icon"><?php echo $row->idBarang[0];?></span>
                                 </a>
-								
-
-
-
-
 								</div>
 
 								<div class="media-body">
@@ -273,8 +155,7 @@
 							<input type="text" class="form-control" name="description">
 						</div>
 					</div>
-					<button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal_form_inline">Launch <i class="icon-play3 ml-2"></i></button>
-
+				
 				</fieldset>
 				<div class="text-right">
 					<button type="submit" class="btn btn-primary">Submit<i class="icon-arrow-right14 position-right"></i></button>
@@ -297,6 +178,7 @@
 				<table class="table text-nowrap">
 					<thead>
 						<tr>
+							<th >NO</th>
 							<th >ID Pesanan</th>
 							<th >Description</th>
 							<th >Timestamp</th>
@@ -304,9 +186,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php if ($barang->num_rows() > 0) {
+						<?php
+						  if ($pesanan->num_rows() > 0) {
 							$i = 1;
-							foreach ($barang->result() as $row)	{ ?>
+							foreach ($pesanan->result() as $row)	{ ?>
 
 						<tr>
 							<td>
@@ -314,19 +197,25 @@
 								<?php echo $i ;?>
 								</h6>
 							</td>
-							<td>
+							<td><a href="<?php echo base_url();?>index.php/home/openPesananDetail/<?php echo $row->idPesanan;?>" 
+								   class="btn bg-teal-400 btn-rounded btn-icon btn-xs">
 									<h6 class="no-margin"></h6>
-									<?php echo $row->idBarang;?>
+									<?php echo $row->idPesanan;?>
 									</h6>
-							</td>
+								</a>
+								</td>
 
 							<td>
 									<h6 class="no-margin"></h6>
-									<?php echo $row->namaBarang;?>
+									<?php echo $row->description;?>
 									</h6>
 							</td>
 							<td>
-									<?php echo $row->statusBarang;?>
+									<?php echo $row->timestamp;?>
+							</td>
+
+							<td>
+									<?php echo $row->timestamp;?>
 							</td>
 
 						</tr>
@@ -338,26 +227,6 @@
 		</div>
 	</div>
 
-	<div id="modal_form_inline" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Inline form</h5>
-					<button type="button" class="close" data-dismiss="modal">×</button>
-				</div>
-
-				<form action="#" class="modal-body form-inline justify-content-center">
-					<label>Username:</label>
-					<input type="text" placeholder="Your username" class="form-control mb-2 mr-sm-2 ml-sm-2 mb-sm-0">
-
-					<label class="ml-sm-2">Password:</label>
-					<input type="password" placeholder="Your password" class="form-control mb-2 mr-sm-2 ml-sm-2 mb-sm-0">
-
-					<button type="submit" class="btn bg-primary ml-sm-2 mb-sm-0">Sign me in <i class="icon-plus22"></i></button>
-				</form>
-			</div>
-		</div>
-	</div>
 	<?php }?>
 </div>
 
