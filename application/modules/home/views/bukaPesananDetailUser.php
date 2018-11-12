@@ -34,7 +34,17 @@
 				<div class="form-group row">
 					<label class="control-label col-lg-2">Status Pesanan : </label>
 					<div class="col-lg-10">
-						<?php echo $dataPesanan['status']?>
+						<?php
+						if ( $dataPesanan[ 'status' ] == "0" ) {
+							echo "Belum di setujui";
+						} else if ( $dataPesanan[ 'status' ] == "1" ) {
+							echo "Telah di setujui";
+						} else if ( $dataPesanan[ 'status' ] == "2" ) {
+							echo "Telah di ambil";
+						} else {
+							echo "Ditolak";
+						}
+						?>
 					</div>
 				</div>
 
@@ -43,7 +53,7 @@
 					<label class="col-lg-2 col-form-label">Disetujui:</label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['username']?>
+							<?php echo $dataPesanan['UserApproval']?>
 						</div>
 					</div>
 				</div>
@@ -54,8 +64,14 @@
 						<div class="form-control-plaintext">
 							<?php echo $dataPesanan['timeapproval']?>
 						</div>
+						<?php if ($dataPesanan['status']=="1"){?>
 					</div>
+					<div class="text-right">
+						<a href="<?php echo base_url();?>index.php/home/prosesPesananConfirmation/<?php echo $dataPesanan['idPesanan'];?>" class="btn bg-teal-400 btn-icon btn-xs"><h5>Submit</h5></a>
+					</div>
+					<?php }?>
 				</div>
+
 			</fieldset>
 		</div>
 	</div>

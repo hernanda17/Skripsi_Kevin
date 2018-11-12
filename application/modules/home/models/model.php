@@ -125,15 +125,17 @@ Class model extends CI_Model {
 	function getDataPesananDetailUser() {
 
 		$id = $this->security->xss_clean( $this->input->post( 'idRFID' ) );
-		$this->db->select( '`pesanan`.`idPesanan`,
-							`pesanan`.`timestamp`,
-							`pesanan`.`status`,
-							`pesanan`.`timeapproval`,
-							`pesanan`.`description`,
-							`pesanan`.`idUser`,
-							`user`.username ' );
-		$this->db->where( 'user.idRFId', $id );
-		$this->db->join( 'user', 'pesanan.idUser = user.`idUser` ');
+		$this->db->select( 'pesanan.idPesanan,
+							pesanan.`timestamp`,
+							pesanan.`status`,
+							pesanan.timeapproval,
+							pesanan.description,
+							pesanan.idUser,
+							a.username,
+							b.username "UserApproval"' );
+		$this->db->where( 'a.idRFId', $id );
+		$this->db->join( 'user AS a', 'pesanan.idUser = a.idUser ');
+		$this->db->join( 'user AS b', 'b.idUser = pesanan.idUserApproval ','left');
 		return $this->db->get( 'pesanan' );
 	}
 
@@ -151,6 +153,12 @@ Class model extends CI_Model {
 		return $this->db->get( 'pesanan' );
 	}
 	
+	public
+	function PesananConfirmation($idPesanan) {
+		$data[ "status" ] = "2";
+		$this->db->where( 'idPesanan', $idPesanan );
+		return $this->db->update( 'pesanan', $data );
+	}
 	
 	
 	

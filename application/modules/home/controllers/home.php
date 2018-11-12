@@ -126,6 +126,16 @@ class home extends MX_Controller {
 	}
 	
 	public
+	function prosesPesananConfirmation() {
+		$result = $this->model->PesananConfirmation( $this->uri->segment( 3 ));
+		if ( !$result ) {
+			$this->status( "Kirim Pesan", "Kirim Pesan Gagal (ID pesanan telah digunakan)" );
+		} else {
+			$this->status( "Kirim Pesan", "Kirim Pesan Berhasil" );
+		}
+	}
+	
+	public
 	function confirmation() {
 		
 		$this->load->view( 'headerExBar' );
@@ -138,7 +148,8 @@ class home extends MX_Controller {
 		$detailBarang = $this->model->getDataPesananBarangUser();
 		$data[ 'pesananDetail' ] = $detailPesanan;
 		$data[ 'pesananBarang' ] = $detailBarang;
-		$this->load->view( 'header' );
+		//echo $this->db->last_query();
+		$this->load->view( 'headerExBar' );
 		$this->load->view( 'bukaPesananDetailUser', $data );
 	}
 	

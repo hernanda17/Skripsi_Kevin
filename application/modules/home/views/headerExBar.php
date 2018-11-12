@@ -73,27 +73,7 @@
 					</div>
 				</div>
 				</li>
-				<li class="dropdown dropdown-user">
-					<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-						<img src="<?php echo base_url();?>assets/images/placeholder.jpg" alt="">
-						<span><?php if($this->session->userdata('logged_in'))
-									{
-										$session_id = $this->session->userdata('logged_in');
-										echo $session_id["idUser"];
-									}else
-									{
-										echo "Nama Admin";
-									}
-									?></span>
-						<i class="caret"></i>
-					</a>
 				
-
-					<ul class="dropdown-menu dropdown-menu-right">
-						<li><a href="<?php echo base_url();?>index.php/home/do_logout"><i class="icon-switch2"></i> Logout</a>
-						</li>
-					</ul>
-				</li>
 			</ul>
 		</div>
 	</div>
