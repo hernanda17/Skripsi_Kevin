@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 10/11/2018 12:41:30
+ Date: 14/11/2018 09:54:16
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `barang`  (
 -- ----------------------------
 INSERT INTO `barang` VALUES ('1', 'barang1', 11, 0, 1, '2018-11-09 23:52:28');
 INSERT INTO `barang` VALUES ('123131', 'hehe', 12, 0, 1, '2018-11-09 19:18:16');
-INSERT INTO `barang` VALUES ('2', 'barang hehe', 10, 1, 1, '2018-11-09 23:52:45');
+INSERT INTO `barang` VALUES ('2', 'barang hehe', 10, 0, 1, '2018-11-09 23:52:45');
 
 -- ----------------------------
 -- Table structure for pesanan
@@ -54,16 +54,28 @@ CREATE TABLE `pesanan`  (
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Records of pesanan
+-- ----------------------------
+INSERT INTO `pesanan` VALUES ('0011321321', 2, '2018-11-10 07:18:45', 0, NULL, NULL, 'buat bangun rumah');
+
+-- ----------------------------
 -- Table structure for pesanandetail
 -- ----------------------------
 DROP TABLE IF EXISTS `pesanandetail`;
 CREATE TABLE `pesanandetail`  (
-  `idPesananDetail` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `idPesananDetail` int(50) NOT NULL AUTO_INCREMENT,
   `idPesanan` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `idBarang` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `qty` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`idPesananDetail`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of pesanandetail
+-- ----------------------------
+INSERT INTO `pesanandetail` VALUES (1, '0011321321', '123131', 10);
+INSERT INTO `pesanandetail` VALUES (2, '0011321321', '1', 10);
+INSERT INTO `pesanandetail` VALUES (3, '0011321321', '2', 20);
 
 -- ----------------------------
 -- Table structure for user
@@ -71,6 +83,7 @@ CREATE TABLE `pesanandetail`  (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `idUser` int(8) NOT NULL AUTO_INCREMENT,
+  `idRFID` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `username` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `password` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `status` int(1) NULL DEFAULT NULL,
@@ -81,8 +94,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin_Gu', 'admin', 0, 0);
-INSERT INTO `user` VALUES (2, 'admin_Te', 'admin', 0, 1);
-INSERT INTO `user` VALUES (3, 'admin_Ke', 'admin', 0, 2);
+INSERT INTO `user` VALUES (1, NULL, 'admin_Gu', 'admin', 0, 0);
+INSERT INTO `user` VALUES (2, '001', 'admin_Te', 'admin', 0, 1);
+INSERT INTO `user` VALUES (3, NULL, 'admin_Ke', 'admin', 0, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
