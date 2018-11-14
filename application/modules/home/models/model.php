@@ -160,12 +160,50 @@ Class model extends CI_Model {
 		return $this->db->update( 'pesanan', $data );
 	}
 	
+	public
+	function PesananAcceptConfirmation($idPesanan) {
+		$data[ "status" ] = "1";
+		$this->db->where( 'idPesanan', $idPesanan );
+		return $this->db->update( 'pesanan', $data );
+	}
 	
-	
-	
-   
+	public
+	function PesananBatal($idPesanan) {
+		$data[ "status" ] = "3";
+		$this->db->where( 'idPesanan', $idPesanan );
+		return $this->db->update( 'pesanan', $data );
+	}
 
-   
+
+	public
+    function getDataPesananKonfirmasi() {
+	
+		$this->db->select( 'pesanan.idPesanan,
+							pesanan.`timestamp`,
+							pesanan.description,
+							`user`.username' );
+		$this->db->where('pesanan.`status`', '0');
+		$this->db->join( '`user`', 'user.idUser = pesanan.idUser' );
+    	return $this->db->get( 'pesanan' );
+    }
+	
+	public
+    function getDataPesananDetailKonfirmasi($idPesanan) {
+		
+		$id = $this->session->userdata('logged_in')['idUser'];
+	    $this->db->select(' pesanan.idPesanan,
+							pesanan.idUser,
+							pesanan.`timestamp`,
+							pesanan.`status`,
+							pesanan.timeapproval,
+							pesanan.description,
+							`user`.username');
+		$this->db->distinct();
+		$this->db->where('`pesanandetail`.idPesanan', $idPesanan);
+		$this->db->join('pesanan', 'pesanandetail.idPesanan = pesanan.idPesanan');
+		$this->db->join('`user`', 'pesanan.idUserApproval = `user`.idUser ', 'left');
+    	return $this->db->get( 'pesanandetail' );
+    }
    
 	public function do_upload()
     {

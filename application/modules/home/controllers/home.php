@@ -22,6 +22,9 @@ class home extends MX_Controller {
 			} else if ( $role == "1" ){
 				$pesanan = $this->model->getDataPesanan(null);
 				$data[ 'pesanan' ] = $pesanan;
+			}else if ( $role == "2" ){
+				$pesanan = $this->model->getDataPesananKonfirmasi(null);
+				$data[ 'pesanan' ] = $pesanan;
 			}
 			$this->load->view( 'beranda', $data );
 		} else
@@ -110,6 +113,9 @@ class home extends MX_Controller {
 			} else if ( $role == "1" ){
 				$pesanan = $this->model->getDataPesanan(null);
 				$data[ 'pesanan' ] = $pesanan;
+			}else if ( $role == "2" ){
+				$pesanan = $this->model->getDataPesananKonfirmasi();
+				$data[ 'pesanan' ] = @$pesanan;
 			}
 			$this->load->view( 'beranda', $data );
 		}
@@ -143,6 +149,18 @@ class home extends MX_Controller {
 	}
 	
 	public
+	function openPesananDetailConfirmationAccept() {
+		$detailPesanan = $this->model->getDataPesananDetail( $this->uri->segment( 3 ) );
+		$detailBarang = $this->model->getDataPesananBarang( $this->uri->segment( 3 ) );
+		$barang = $this->model->getDataBarang( null );
+		$data[ 'pesananDetail' ] = $detailPesanan;
+		$data[ 'pesananBarang' ] = $detailBarang;
+		$data[ 'barang' ] = $barang;
+		$this->load->view( 'header' );
+		$this->load->view( 'bukaPesananDetailConfirmation', $data );
+	}
+
+	public
 	function openPesananDetailConfirmation() {
 		$detailPesanan = $this->model->getDataPesananDetailUser();
 		$detailBarang = $this->model->getDataPesananBarangUser();
@@ -151,6 +169,26 @@ class home extends MX_Controller {
 		//echo $this->db->last_query();
 		$this->load->view( 'headerExBar' );
 		$this->load->view( 'bukaPesananDetailUser', $data );
+	}
+	
+	public
+	function processKonfirmasiPesanan() {
+		$result = $this->model->PesananAcceptConfirmation($this->uri->segment( 3 ));
+		if ( !$result ) {
+			$this->status( "Konfirmasi Pesan", "Konfirmasi pesan gagal" );
+		} else {
+			$this->status( "Konfirmasi Pesan", "Konfirmasi Pesan Berhasil" );
+		}
+	}
+	
+	public
+	function processBatalPesanan() {
+		$result = $this->model->PesananBatal($this->uri->segment( 3 ));
+		if ( !$result ) {
+			$this->status( "Batal Pesan", "Batal pesan gagal" );
+		} else {
+			$this->status( "Batal Pesan", "Batal Pesan Berhasil" );
+		}
 	}
 	
 	public
@@ -163,8 +201,6 @@ class home extends MX_Controller {
 		}
 	}
 	
-	
-
 	public
 	function do_logout() {
 		$this->session->sess_destroy();

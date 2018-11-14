@@ -184,42 +184,15 @@
 								
 								</li>
 								<?php 
-								//get role
-								$role = $this->session->userdata('Role'); 
-								if($role == "1")
+								if(@$role == "0" ||@$role == "2")
 								{
 								?>
 								<li><a href="<?php echo base_url();
 									?>index.php/home/Report">
 									<i class="icon-mailbox"></i> 
-									<span>Report</span></a>
-								
+									<span>REPORT</span></a>
 								</li>
-								<?php }
-								if($role == "2")
-								{
-								?>
-								<li><a href="<?php echo base_url();
-									?>index.php/home/Barang">
-									<i class="icon-users"></i> 
-									<span>Barang</span></a>
-								
-								</li>
-								<?php 
-								}
-								if($role == "3")
-								{
-								?>
-
-								<li><a href="<?php echo base_url();
-									?>index.php/home/Barang">
-									<i class="icon-users"></i> 
-									<span>Barang</span></a>
-								
-								</li>
-								<?php 
-								}
-								?>
+								<?php }?>
 							</ul>
 						</div>
 					</div>
