@@ -173,7 +173,20 @@ Class model extends CI_Model {
 		$this->db->where( 'idPesanan', $idPesanan );
 		return $this->db->update( 'pesanan', $data );
 	}
+	public
+	function getReportData() {
 
+		$this->db->select( 'barang.namaBarang,
+							pesanandetail.qty,
+							pesanan.idPesanan,
+							pesanan.`status`,
+							`user`.username' );
+		$this->db->join( 'pesanandetail', 'pesanan.idPesanan = pesanandetail.idPesanan ');
+		$this->db->join( 'barang', 'barang.idBarang = pesanandetail.idBarang');
+		$this->db->join( '`user`', 'user.idUser = pesanan.idUser');
+		return $this->db->get( 'pesanan' );
+	}
+	
 
 	public
     function getDataPesananKonfirmasi() {

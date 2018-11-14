@@ -246,6 +246,18 @@ class home extends MX_Controller {
 		}
 	}
 
+	public 
+	function Report()
+	{
+		$this->load->helper('pdf_helper');
+		$result = $this->model->getReportData();
+		$data['data'] = $result;
+		//$this->load->view( 'header' );
+		$this->load->view('report', $data);
+	}
+	
+	
+	
 	public
 	function kirimUlang() {
 		$result = $this->model->kirimUlang( $this->uri->segment( 3 ) );

@@ -237,6 +237,7 @@
 		<!--Tampilan Beranda Kepala Teknisi-->
 
 		<?php if($role =="2"){?>
+
 		<div class="panel panel-white">
 			<div class="panel-heading">
 				<h5 class="panel-title">Menejemen Konfirmasi Pesanan</h5>
