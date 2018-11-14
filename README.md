@@ -1,2 +1,2 @@
-# Skripsi_Kevin
+# Skripsi Kevin
 Applikasi web codeigniter database mysql
