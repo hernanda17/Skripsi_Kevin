@@ -105,10 +105,9 @@ Class model extends CI_Model {
 							pesanan.description,
 							`user`.username');
 		$this->db->distinct();
-		$this->db->where('`pesanandetail`.idPesanan', $idPesanan);
-		$this->db->join('pesanan', 'pesanandetail.idPesanan = pesanan.idPesanan');
+		$this->db->where('`pesanan`.idPesanan', $idPesanan);
 		$this->db->join('`user`', 'pesanan.idUserApproval = `user`.idUser ', 'left');
-    	return $this->db->get( 'pesanandetail' );
+    	return $this->db->get( 'pesanan' );
     }
 	
 	public
