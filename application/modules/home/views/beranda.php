@@ -220,7 +220,16 @@
 								</td>
 
 								<td>
-									<?php echo $row->timestamp;?>
+									<?php 
+									$status = $row->status;
+									if($status == 0)
+									{
+										echo "Belum Disetujui";
+									}else if ($status == 1)
+										echo "Sudah disetujui";
+									else 
+										echo "Selesai";
+									?>
 								</td>
 
 							</tr>

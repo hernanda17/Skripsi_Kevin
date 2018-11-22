@@ -54,6 +54,17 @@ Class model extends CI_Model {
     }
 	
 	public
+    function kirimPesan() {
+    	$session_id = $this->session->userdata( 'logged_in' );
+    	$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
+    	$g[ "description" ] = $this->security->xss_clean( $this->input->post( 'description' ) );
+    	$g[ "status" ] = "0";
+    	$g[ "timestamp" ] = date( 'YmdHis' );
+    	$g[ "idUser" ] = $session_id[ "idUser" ];
+    	return $this->db->insert( "pesanan", $g );
+    }
+	
+	public
 	function perbaharuiBarang() {
 		$idBarang =  $this->security->xss_clean( $this->input->post( 'idBarang' ) );
 		$data[ "namaBarang" ] = $this->security->xss_clean( $this->input->post( 'namaBarang' ) );
@@ -173,6 +184,7 @@ Class model extends CI_Model {
 		$this->db->where( 'idPesanan', $idPesanan );
 		return $this->db->update( 'pesanan', $data );
 	}
+	
 	public
 	function getReportData() {
 
@@ -186,7 +198,6 @@ Class model extends CI_Model {
 		$this->db->join( '`user`', 'user.idUser = pesanan.idUser');
 		return $this->db->get( 'pesanan' );
 	}
-	
 
 	public
     function getDataPesananKonfirmasi() {
@@ -218,7 +229,7 @@ Class model extends CI_Model {
     	return $this->db->get( 'pesanandetail' );
     }
    
-	public function do_upload()
+/*	public function do_upload()
     {
 	  $config['upload_path']          = 'assets/upload/';
 	  $config['allowed_types']        = 'doc|docx';
@@ -260,6 +271,6 @@ Class model extends CI_Model {
 		$this->email->message($pesan);
 		$this->email->attach($upl['full_path']);
 		$this->email->send();
-	}
+	}*/
 }
 ?>
