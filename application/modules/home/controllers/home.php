@@ -257,7 +257,6 @@ class home extends MX_Controller {
 	}
 	
 	
-	
 	public
 	function kirimUlang() {
 		$result = $this->model->kirimUlang( $this->uri->segment( 3 ) );

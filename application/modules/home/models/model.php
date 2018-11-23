@@ -124,12 +124,39 @@ Class model extends CI_Model {
 	
     public
     function tambahDataPesananBarang() {
-    	$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
-    	$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
-    	$g[ "qty" ] = $this->security->xss_clean( $this->input->post( 'qty' ) );
-		$this->db->insert( "pesanandetail", $g );
-    	return true;
+		$qty = $this->input->post( 'qty' );
+		$id= $this->input->post( 'idBarang' );
+		$dataStokBarang = (int) $this->cekStokBarang($id,$qty);
+		if($dataStokBarang >=0)
+		{
+			$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
+			$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
+			$g[ "qty" ] = $this->security->xss_clean( $this->input->post( 'qty' ) );
+			$this->db->insert( "pesanandetail", $g );
+			$this->UpdateStok($id,$dataStokBarang);
+    	    return true;
+		}
+		return false;
     }
+	
+	function cekStokBarang($idBarang,$qtyMasuk){
+		//ambil databarang
+		$data = $this->getDataBarang($idBarang);
+		//ambil data stok
+		$dataBarang = $data->result_array();
+		$stok = (int) $dataBarang[0]["stokBarang"];
+		//kurangi stok nya
+		$stok = $stok - $qtyMasuk;
+		return $stok;
+	}
+	
+	public
+	function UpdateStok($idBarang,$banyak) {
+		$data[ "stokBarang" ] = $banyak;
+		$this->db->where( 'idBarang', $idBarang );
+		return $this->db->update( 'barang', $data );
+	}
+	
 	
 	public
 	function getDataPesananDetailUser() {
