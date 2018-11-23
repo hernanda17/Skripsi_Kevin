@@ -182,6 +182,16 @@ class home extends MX_Controller {
 	}
 	
 	public
+	function procesCariBarang()
+	{
+		$cariData =	$this->security->xss_clean( $this->input->post( 'cariData' ) );
+		$barang = $this->model->getCariDataBarang($cariData);
+		$data[ 'barang' ] = $barang;
+		$this->load->view( 'header' );
+		$this->load->view( 'beranda', $data );
+	}
+	
+	public
 	function processBatalPesanan() {
 		$result = $this->model->PesananBatal($this->uri->segment( 3 ));
 		if ( !$result ) {

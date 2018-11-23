@@ -40,6 +40,17 @@ Class model extends CI_Model {
 		}
     	return $this->db->get( 'barang' );
     }
+	
+	public
+    function getCariDataBarang($id) {
+		if(count($id)> 0 && $id != null )
+		{
+			$this->db->like('idBarang', $id);	
+			$this->db->or_like('namaBarang', $id);	
+		}
+		$this->db->where('statusBarang', "0");
+    	return $this->db->get( 'barang' );
+    }
 
     public
     function simpanBarang() {
@@ -200,6 +211,8 @@ Class model extends CI_Model {
 	public
 	function PesananAcceptConfirmation($idPesanan) {
 		$data[ "status" ] = "1";
+		$data[ "timeapproval" ] = date( 'YmdHis' );
+		$data[ "idUserApproval" ] = $this->session->userdata('logged_in')['idUser'];
 		$this->db->where( 'idPesanan', $idPesanan );
 		return $this->db->update( 'pesanan', $data );
 	}

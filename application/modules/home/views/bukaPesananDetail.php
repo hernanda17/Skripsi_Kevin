@@ -34,14 +34,16 @@
 				<div class="form-group row">
 					<label class="control-label col-lg-2">Status Pesanan : </label>
 					<div class="col-lg-10">
-						<?php
+						<?php 
 						$status = $dataPesanan[ 'status' ];
-						if ( $status == 0 ) {
-							echo "Belum Disetujui";
-						} else if ( $status == 1 )
-							echo "Sudah disetujui";
-						else
-							echo "Selesai";
+						if($status == 0)
+							echo "Pesanan belum Disetujui";
+						else if ($status == 1)
+							echo "Pesanan telah disetujui";
+						else if($status == 2)
+							echo "Pesanan telah selesai";
+						else if($status == 3)
+							echo "Pesanan telah dibatalkan";
 						?>
 					</div>
 				</div>
