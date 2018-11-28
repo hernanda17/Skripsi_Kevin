@@ -193,6 +193,17 @@
 									<span>REPORT</span></a>
 								</li>
 								<?php }?>
+								
+								<?php 
+								if(@$role == "0")
+								{
+								?>
+								<li><a href="<?php echo base_url();
+									?>index.php/home/confirmation">
+									<i class="icon-stack-check"></i> 
+									<span>CONFIRMATION</span></a>
+								</li>
+								<?php }?>
 							</ul>
 						</div>
 					</div>
