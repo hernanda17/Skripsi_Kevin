@@ -5,7 +5,7 @@
 	$obj_pdf->SetCreator(PDF_CREATOR);
 	$title = "Aplikasi Teknisi";
 	$obj_pdf->SetTitle($title);
-	$obj_pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $title, 'Report Barang');
+	$obj_pdf->SetHeaderData(PDF_HEADER_LOGO, 10, $title, 'Report Barang');
 	$obj_pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 	$obj_pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 	$obj_pdf->SetDefaultMonospacedFont('helvetica');

@@ -9,7 +9,7 @@
 		<div class="panel-body">
 
 			<?php 
-			$dataPesanan = $pesananDetail->result_array()[0];
+			$dataPesanan = @$pesananDetail->result_array()[0];
 			?>
 			<!--Detail Pesanan-->
 			<fieldset class="content-group">
@@ -17,7 +17,7 @@
 					<label class="col-lg-2 col-form-label">ID Pesanan:</label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['idPesanan']?>
+							<?php echo @$dataPesanan['idPesanan']?>
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,7 @@
 					<label class="col-lg-2 col-form-label">TimeStamp : </label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['timestamp']?>
+							<?php echo @$dataPesanan['timestamp']?>
 						</div>
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 							echo "Telah di setujui";
 						} else if ( $dataPesanan[ 'status' ] == "2" ) {
 							echo "Telah di ambil";
-						} else {
+						} else if ( $dataPesanan[ 'status' ] == "3" ){
 							echo "Ditolak";
 						}
 						?>
@@ -53,7 +53,7 @@
 					<label class="col-lg-2 col-form-label">Disetujui:</label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['UserApproval']?>
+							<?php echo @$dataPesanan['UserApproval']?>
 						</div>
 					</div>
 				</div>
@@ -62,12 +62,12 @@
 					<label class="col-lg-2 col-form-label">Waktu Disetujui:</label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['timeapproval']?>
+							<?php echo @$dataPesanan['timeapproval']?>
 						</div>
 						<?php if ($dataPesanan['status']=="1"){?>
 					</div>
 					<div class="text-right">
-						<a href="<?php echo base_url();?>index.php/home/prosesPesananConfirmation/<?php echo $dataPesanan['idPesanan'];?>" class="btn bg-teal-400 btn-icon btn-xs"><h5>Submit</h5></a>
+						<a href="<?php echo base_url();?>index.php/home/prosesPesananConfirmation/<?php echo @$dataPesanan['idPesanan'];?>" class="btn bg-teal-400 btn-icon btn-xs"><h5>Submit</h5></a>
 					</div>
 					<?php }?>
 				</div>

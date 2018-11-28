@@ -214,7 +214,7 @@ class home extends MX_Controller {
 	public
 	function do_logout() {
 		$this->session->sess_destroy();
-		$this->status( "Logout", "Logout Berhasil" );
+		$this->status( "Logout", "Logout Berhasil" 	);
 	}
 
 	public

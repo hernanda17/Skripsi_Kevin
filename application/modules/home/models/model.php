@@ -182,6 +182,8 @@ Class model extends CI_Model {
 							a.username,
 							b.username "UserApproval"' );
 		$this->db->where( 'a.idRFId', $id );
+		$this->db->where( 'pesanan.`status`', "1" );
+		$this->db->order_by( 'pesanan.`timestamp`', "ASC" );
 		$this->db->join( 'user AS a', 'pesanan.idUser = a.idUser ');
 		$this->db->join( 'user AS b', 'b.idUser = pesanan.idUserApproval ','left');
 		return $this->db->get( 'pesanan' );
@@ -194,7 +196,9 @@ Class model extends CI_Model {
 		$this->db->select( 'barang.idBarang,
 							barang.namaBarang,
 							pesanandetail.qty' );
+		$this->db->order_by( 'pesanan.`timestamp`', "ASC" );
 		$this->db->where( '`user`.idRFID', $id );
+		$this->db->where( 'pesanan.`status`', "1" );
 		$this->db->join( 'pesanandetail', 'pesanandetail.idPesanan = pesanan.idPesanan' );
 		$this->db->join( 'barang', 'pesanandetail.idBarang = barang.idBarang' );
 		$this->db->join( '`user`', 'user.idUser = pesanan.idUser' );

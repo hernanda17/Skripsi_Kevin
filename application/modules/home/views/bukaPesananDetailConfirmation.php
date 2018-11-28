@@ -9,7 +9,7 @@
 		<div class="panel-body">
 
 			<?php 
-			$dataPesanan = $pesananDetail->result_array()[0];
+			$dataPesanan = @$pesananDetail->result_array()[0];
 			?>
 			<!--Detail Pesanan-->
 			<fieldset class="content-group">
@@ -17,7 +17,7 @@
 					<label class="col-lg-2 col-form-label">ID Pesanan:</label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['idPesanan']?>
+							<?php echo @$dataPesanan['idPesanan']?>
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,7 @@
 					<label class="col-lg-2 col-form-label">TimeStamp : </label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['timestamp']?>
+							<?php echo @$dataPesanan['timestamp']?>
 						</div>
 					</div>
 				</div>
@@ -34,7 +34,7 @@
 				<div class="form-group row">
 					<label class="control-label col-lg-2">Status Pesanan : </label>
 					<div class="col-lg-10">
-						<?php echo $dataPesanan['status']?>
+						<?php echo @$dataPesanan['status']?>
 					</div>
 				</div>
 
@@ -43,7 +43,7 @@
 					<label class="col-lg-2 col-form-label">Disetujui:</label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['username']?>
+							<?php echo @$dataPesanan['username']?>
 						</div>
 					</div>
 				</div>
@@ -52,7 +52,7 @@
 					<label class="col-lg-2 col-form-label">Waktu Disetujui:</label>
 					<div class="col-lg-10">
 						<div class="form-control-plaintext">
-							<?php echo $dataPesanan['timeapproval']?>
+							<?php echo @$dataPesanan['timeapproval']?>
 						</div>
 					</div>
 				</div>
