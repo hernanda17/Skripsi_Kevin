@@ -25,7 +25,6 @@
 					<th><b>No</b></th>
 					<th><b>ID Pesanan</b></th>
 					<th><b>User</b></th>
-					<th><b>Status</b></th>
 					<th><b>Nama Barang</b></th>
 					<th><b>Total Barang</b></th>
 				</tr>
@@ -44,9 +43,6 @@
 						</td>
 						<td>
 							<?php echo $row->username;?>
-						</td>
-						<td>
-							<?php echo $row->status;?>
 						</td>
 						<td>
 							<?php echo $row->namaBarang;?>
