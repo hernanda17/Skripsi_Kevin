@@ -16,7 +16,7 @@
                 <fieldset class="content-group">
         
                     <div class="form-group">
-                        <label class="control-label col-lg-2">Email</label>
+                        <label class="control-label col-lg-2">Username</label>
                         <div class="col-lg-10">
                             <input type="text" class="form-control" name="username">
                         </div>

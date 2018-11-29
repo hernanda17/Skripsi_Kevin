@@ -221,7 +221,7 @@
 				<div class="page-header">
 					<div class="page-header-content">
 						<div class="page-title">
-							<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Teknisi</span></h4>
+							<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Spare Part Ordering System </span></h4>
 						</div>
 						<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
 					</div>

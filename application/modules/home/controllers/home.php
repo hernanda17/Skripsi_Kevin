@@ -127,7 +127,7 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->status( "Kirim Pesan", "Kirim Pesan Gagal (ID pesanan telah digunakan)" );
 		} else {
-			$this->status( "Kirim Pesan", "Kirim Pesan Berhasil" );
+			$this->status( "Kirim Pesan", "Pesanan telah berhasil dibuat dan menunggu konfirmasi" );
 		}
 	}
 	
@@ -197,7 +197,7 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->status( "Batal Pesan", "Batal pesan gagal" );
 		} else {
-			$this->status( "Batal Pesan", "Batal Pesan Berhasil" );
+			$this->status( "Batal Pesan", "Pesanan Dibatalkan" );
 		}
 	}
 	
@@ -207,7 +207,7 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->status( "Data Barang", "Stok barang tidak mencukupi" );
 		} else {
-			$this->status( "Data Barang", "Tambah barang sukses" );
+			$this->status( "Data Barang", "Barang sudah ditambahkan" );
 		}
 	}
 	
@@ -224,7 +224,7 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->status( "Perbaharui Barang", "Perbaharui Barang Anda Gagal" );
 		} else {
-			$this->status( "Perbaharui Barang", "Perbaharui Barang Anda Berhasil" );
+			$this->status( "Perbaharui Barang", "Data barang telah diperbaharui" );
 		}
 	}
 	
@@ -234,7 +234,7 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->status( "Hapus Barang", "Hapus Barang Anda Gagal" );
 		} else {
-			$this->status( "Hapus Barang", "Hapus Barang Anda Berhasil" );
+			$this->status( "Hapus Barang", "Data Barang telah dihapus" );
 		}
 	}
 
