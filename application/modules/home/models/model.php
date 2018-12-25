@@ -53,6 +53,21 @@ Class model extends CI_Model {
     }
 	
 	public
+    function getDataAdmin($id) {
+		
+    	$session_id = $this->session->userdata( 'logged_in' );
+		$this->db->where('status', "0");
+		$this->db->where('idUser_Atasan', $session_id[ "idUser" ]);
+		
+		
+		if($id != null )
+		{
+		   $this->db->where('idUser', $id);
+		}
+    	return $this->db->get( 'user' );
+    }
+	
+	public
     function getCariDataBarang($id) {
 		if($id != null )
 		{
@@ -86,6 +101,17 @@ Class model extends CI_Model {
     }
 	
 	public
+    function simpanAdmin() {
+    	$session_id = $this->session->userdata( 'logged_in' );
+    	$g[ "idUser_Atasan" ] = $session_id[ "idUser" ];
+    	$g[ "idRFID" ] = $this->security->xss_clean( $this->input->post( 'id_rfid' ) );
+    	$g[ "role" ] = $session_id[ "role" ];
+    	$g[ "username" ] = $this->security->xss_clean( $this->input->post( 'username' ) );
+    	$g[ "password" ] = $this->security->xss_clean( $this->input->post( 'password' ) );
+    	return $this->db->insert( "user", $g );
+    }
+	
+	public
     function kirimPesan() {
     	$session_id = $this->session->userdata( 'logged_in' );
     	$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
@@ -106,10 +132,26 @@ Class model extends CI_Model {
 	}
 	
 	public
+	function perbaharuiAdmin() {
+		$idUser =  $this->security->xss_clean( $this->input->post( 'idUser' ) );
+		$data[ "username" ] = $this->security->xss_clean( $this->input->post( 'username' ) );
+		$data[ "idRFID" ] = $this->security->xss_clean( $this->input->post( 'idRFID' ) );
+		$this->db->where( 'idUser', $idUser );
+		return $this->db->update( 'user', $data );
+	}
+	
+	public
 	function HapusBarang($idBarang) {
 		$data[ "statusBarang" ] = "1";
 		$this->db->where( 'idBarang', $idBarang );
 		return $this->db->update( 'barang', $data );
+	}
+	
+	public
+	function HapusAdmin($idAdmin) {
+		$data[ "status" ] = "1";
+		$this->db->where( 'idUser', $idAdmin );
+		return $this->db->update( 'user', $data );
 	}
 	
 	public

@@ -34,6 +34,19 @@ class home extends MX_Controller {
 	}
 
 	public
+	function Admin() {
+		
+		if ( $this->session->userdata( 'logged_in' ) ) {
+			
+			
+			$Admin = $this->model->getDataAdmin("");
+			$data[ 'Admin' ] = $Admin;
+			$this->load->view( 'header' );
+			$this->load->view( 'Admin' , $data );
+		}
+	}
+	
+	public
 	function openPageEmail() {
 		$this->load->view( 'header' );
 		if ( $this->session->userdata( 'logged_in' ) ) {
@@ -87,6 +100,14 @@ class home extends MX_Controller {
 		$data[ 'barang' ] = $detailBarang;
 		$this->load->view( 'header' );
 		$this->load->view( 'bukaPesan', $data );
+	}
+	
+	public
+	function openPageAdminDetail() {
+		$detailAdmin = $this->model->getDataAdmin( $this->uri->segment( 3 ) );
+		$data[ 'Admin' ] = $detailAdmin;
+		$this->load->view( 'header' );
+		$this->load->view( 'bukaAdmin', $data );
 	}
 	
 	public
@@ -233,12 +254,33 @@ class home extends MX_Controller {
 	}
 	
 	public
+	function PerbaharuiAdmin() {
+		
+		$result = $this->model->perbaharuiAdmin();
+		if ( !$result ) {
+			$this->status( "Perbaharui Admin", "Perbaharui Admin Anda Gagal" );
+		} else {
+			$this->status( "Perbaharui Admin", "Data Admin telah diperbaharui" );
+		}
+	}
+	
+	public
 	function prosesHapusBarang() {
 		$result = $this->model->HapusBarang( $this->uri->segment( 3 ));
 		if ( !$result ) {
 			$this->status( "Hapus Barang", "Hapus Barang Anda Gagal" );
 		} else {
 			$this->status( "Hapus Barang", "Data Barang telah dihapus" );
+		}
+	}
+	
+	public
+	function prosesHapusAdmin() {
+		$result = $this->model->HapusAdmin( $this->uri->segment( 3 ));
+		if ( !$result ) {
+			$this->status( "Hapus Admin", "Hapus Admin Anda Gagal" );
+		} else {
+			$this->status( "Hapus Admin", "Data Admin telah dihapus" );
 		}
 	}
 
@@ -264,9 +306,19 @@ class home extends MX_Controller {
 	function SimpanJenis() {
 		$result = $this->model->simpanJenis();
 		if ( !$result ) {
-			$this->status( "Barang Baru", "Penambahan Jenis Gagal" );
+			$this->status( "Jenis Baru", "Penambahan Jenis Gagal" );
 		} else {
-			$this->status( "Barang Baru", "Penambahan Jenis Berhasil" );
+			$this->status( "Jenis Baru", "Penambahan Jenis Berhasil" );
+		}
+	}
+	
+	public
+	function SimpanAdmin() {
+		$result = $this->model->simpanAdmin();
+		if ( !$result ) {
+			$this->status( "Admin Baru", "Penambahan Admin Gagal" );
+		} else {
+			$this->status( "Admin Baru", "Penambahan Admin Berhasil" );
 		}
 	}
 

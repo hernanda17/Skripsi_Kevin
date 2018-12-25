@@ -188,7 +188,7 @@
 								{
 								?>
 								<li><a href="<?php echo base_url();
-									?>index.php/home/">
+									?>index.php/home/Admin">
 									<i class="icon-users"></i> 
 									<span>ADMIN</span></a>
 								
