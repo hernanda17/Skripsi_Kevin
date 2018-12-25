@@ -190,7 +190,8 @@ Class model extends CI_Model {
 		$id = $this->session->userdata('logged_in')['idUser'];
 	    $this->db->select(' barang.idBarang,
 							barang.namaBarang,
-							pesanandetail.qty');
+							pesanandetail.qty,
+							pesanandetail.status');
 		$this->db->where('`pesanandetail`.idPesanan', $idPesanan);
 		$this->db->join('pesanandetail', 'barang.idBarang = pesanandetail.idBarang');
     	return $this->db->get( 'barang' );
@@ -258,7 +259,7 @@ Class model extends CI_Model {
 		$id = $this->security->xss_clean( $this->input->post( 'idRFID' ) );
 		$this->db->select( 'barang.idBarang,
 							barang.namaBarang,
-							pesanandetail.qty' );
+							pesanandetail.qty,pesanandetail.status ' );
 		$this->db->order_by( 'pesanan.`timestamp`', "ASC" );
 		$this->db->where( '`user`.idRFID', $id );
 		$this->db->where( 'pesanan.`status`', "1" );

@@ -76,12 +76,12 @@
 		</div>
 	</div>
 	
+	<div class="panel panel-flat">
 	
 	<form class="login-form" action="<?php echo base_url();?>index.php/home/openPesananDetailConfirmation" method='post' name='tambahBarang'>
 					<div class="card mb-0">
 						<div class="card-body">
 							<div class="text-center mb-3">
-								<i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
 								<h5 class="mb-0">Pengambilan barang</h5>
 								<span class="d-block text-muted">Scan RFID Barang</span>
 							</div>
@@ -97,6 +97,7 @@
 						</div>
 					</div>
 				</form>
+	</div>
 
 	<div class="panel panel-white">
 		<div class="panel-heading">
@@ -116,6 +117,7 @@
 							<th>ID Barang</th>
 							<th>Nama Barang</th>
 							<th>Quantity</th>
+							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -123,6 +125,8 @@
 						if ( $pesananBarang->num_rows() > 0 ) {
 							$i = 1;
 							foreach ( $pesananBarang->result() as $row ) {
+								
+						//print_r($pesananBarang);
 								?>
 
 						<tr>
@@ -144,6 +148,17 @@
 							</td>
 							<td>
 								<?php echo $row->qty;?>
+							</td>
+							<td>
+								<?php 
+								if($row->status == 0)
+								{
+									echo "Belum di scan";
+								}else
+									echo "Sudah di scan";
+								
+								
+								?>
 							</td>
 						</tr>
 						<?php $i++;}
