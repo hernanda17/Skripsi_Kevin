@@ -18,7 +18,9 @@ class home extends MX_Controller {
 			$role = $this->session->userdata( 'logged_in' )[ 'role' ];
 			if ( $role == "0" ) {
 				$barang = $this->model->getDataBarang(null);
+				$jenis = $this->model->getDataJenis(null);
 				$data[ 'barang' ] = $barang;
+				$data[ 'jenis' ] = $jenis;
 			} else if ( $role == "1" ){
 				$pesanan = $this->model->getDataPesanan(null);
 				$data[ 'pesanan' ] = $pesanan;
@@ -109,7 +111,9 @@ class home extends MX_Controller {
 			$role = $this->session->userdata( 'logged_in' )[ 'role' ];
 			if ( $role == "0" ) {
 				$barang = $this->model->getDataBarang(null);
+				$jenis = $this->model->getDataJenis(null);
 				$data[ 'barang' ] = $barang;
+				$data[ 'jenis' ] = $jenis;
 			} else if ( $role == "1" ){
 				$pesanan = $this->model->getDataPesanan(null);
 				$data[ 'pesanan' ] = $pesanan;
@@ -253,6 +257,16 @@ class home extends MX_Controller {
 			$this->status( "Barang Baru", "Penambahan Barang Gagal" );
 		} else {
 			$this->status( "Barang Baru", "Penambahan Barang Berhasil" );
+		}
+	}
+	
+	public
+	function SimpanJenis() {
+		$result = $this->model->simpanJenis();
+		if ( !$result ) {
+			$this->status( "Barang Baru", "Penambahan Jenis Gagal" );
+		} else {
+			$this->status( "Barang Baru", "Penambahan Jenis Berhasil" );
 		}
 	}
 

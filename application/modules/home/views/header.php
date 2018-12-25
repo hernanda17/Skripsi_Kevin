@@ -188,6 +188,19 @@
 								{
 								?>
 								<li><a href="<?php echo base_url();
+									?>index.php/home/">
+									<i class="icon-users"></i> 
+									<span>ADMIN</span></a>
+								
+								</li>
+								
+								<?php }?>
+								
+								<?php 
+								if(@$role == "0" ||@$role == "2")
+								{
+								?>
+								<li><a href="<?php echo base_url();
 									?>index.php/home/Report">
 									<i class="icon-mailbox"></i> 
 									<span>REPORT</span></a>

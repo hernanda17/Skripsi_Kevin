@@ -40,6 +40,61 @@
 								<input type="text" class="form-control" name="stokBarang">
 							</div>
 						</div>
+						
+						<div class="form-group">
+		                        	<label class="control-label col-lg-2">Jenis Barang : </label>
+		                        	<div class="col-lg-10">
+			                            <div class="uniform-select fixedWidth">
+										<select class="form-control form-control-uniform" data-fouc="" name="JenisBarang">
+			                               
+										   <?php if ($jenis->num_rows() > 0) {
+											$i = 1;
+											foreach ($jenis->result() as $row)	{ ?>
+														   
+										    <option value="<?php echo $row->id_jenisBarang;?>"><?php echo $row->Nama_jenis;?></option>
+											<?php }}?>
+											
+			                            </select></div>
+		                            </div>
+		                        </div>
+						
+					</fieldset>
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		
+		<div class="panel panel-flat">
+			<div class="panel-heading">
+				<h5 class="panel-title">Jenis Barang</h5>
+				<div class="heading-elements">
+				</div>
+				<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" action="<?php echo base_url();?>index.php/home/SimpanJenis" method='post' name='SimpanJenis'>
+					<fieldset class="content-group">
+						<div class="form-group">
+							<label class="control-label col-lg-2">ID Jenis : </label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="id_jenisBarang">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-lg-2">Nama Jenis : </label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="Nama_jenis">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-lg-2">ID RFID : </label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="id_rfid">
+							</div>
+						</div>
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
@@ -113,6 +168,90 @@
 													</li>
 													<li><a href="<?php echo base_url();?>index.php/home/openPageBarangDetail/<?php echo $row->idBarang;?>">
 												<i class="icon-history"></i> Perbaharui Barang</a>
+													
+
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<?php $i++;}
+					} ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+			<div class="panel panel-white">
+			<div class="panel-heading">
+				<h5 class="panel-title">Menejemen Jenis Barang</h5>
+				<div class="heading-elements">
+					<ul class="icons-list">
+					</ul>
+				</div>
+				<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
+			</div>
+
+
+			<div class="panel panel-flat">
+				<div class="table">
+					<div class="datatable-header">
+						<form class="form" action="<?php echo base_url();?>index.php/home/procesCariBarang" method='post' name='updateProfile'>
+
+							<div id="DataTables_Table_2_filter" class="dataTables_filter">
+
+								<label><span>Cari:</span> 
+									<input type="search" name="cariData" class="" placeholder="Cari data jenis..." aria-controls="DataTables_Table_2">
+								</label>
+							</div>
+						</form>
+						<table class="table text-nowrap">
+							<thead>
+								<tr>
+									<th style="width: 50px;">ID Jenis</th>
+									<th style="width: 50px;">Nama Jenis</th>
+									<th style="width: 50px;">ID RFID</th>
+									<th class="text-center" style="width: 20px;">
+										<i class="icon-arrow-down12"></i>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php if ($jenis->num_rows() > 0) {
+							$i = 1;
+							foreach ($jenis->result() as $row)	{ ?>
+
+								<tr>
+									<td class="">
+										<h6 class="no-margin"></h6>
+										<?php echo $row->id_jenisBarang;?>
+										</h6>
+									</td>
+									<td class="">
+										<h6 class="no-margin"></h6>
+										<?php echo $row->Nama_jenis;?>
+										</h6>
+										
+									</td>
+									<td class="">
+										<h6 class="no-margin"></h6>
+										<?php echo $row->id_rfid;?>
+										</h6>
+									</td>
+									<td class="text-center">
+										<ul class="icons-list">
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+												<ul class="dropdown-menu dropdown-menu-right">
+													<li><a data-toggle="modal" data-target="#modal_default"><i class="icon-undo"></i> Hapus Jenis</a>
+													</li>
+													<li><a href="<?php echo base_url();?>index.php/home/openPageBarangDetail/<?php echo $row->id_jenisBarang;?>">
+												<i class="icon-history"></i> Perbaharui Jenis</a>
 													
 
 													</li>

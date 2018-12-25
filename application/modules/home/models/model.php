@@ -33,7 +33,7 @@ Class model extends CI_Model {
     function getDataBarang($id) {
 		
 		$this->db->where('statusBarang', "0");
-		if(count($id)> 0 && $id != null )
+		if($id != null )
 		{
 		   $this->db->where('idBarang', $id);
 		   $this->db->join('user', 'user.idUser = barang.idUser ');
@@ -42,8 +42,19 @@ Class model extends CI_Model {
     }
 	
 	public
+    function getDataJenis($id) {
+		
+		$this->db->where('status', "0");
+		if($id != null )
+		{
+		   $this->db->where('id_jenisBarang', $id);
+		}
+    	return $this->db->get( 'jenis_barang' );
+    }
+	
+	public
     function getCariDataBarang($id) {
-		if(count($id)> 0 && $id != null )
+		if($id != null )
 		{
 			$this->db->like('idBarang', $id);	
 			$this->db->or_like('namaBarang', $id);	
@@ -58,10 +69,20 @@ Class model extends CI_Model {
     	$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
     	$g[ "namaBarang" ] = $this->security->xss_clean( $this->input->post( 'namaBarang' ) );
     	$g[ "stokBarang" ] = $this->security->xss_clean( $this->input->post( 'stokBarang' ) );
+    	$g[ "id_jenisBarang" ] = $this->security->xss_clean( $this->input->post( 'JenisBarang' ) );
     	$g[ "statusBarang" ] = "0";
     	$g[ "timestamp" ] = date( 'YmdHis' );
     	$g[ "idUser" ] = $session_id[ "idUser" ];
     	return $this->db->insert( "barang", $g );
+    }
+	
+	public
+    function simpanJenis() {
+    	$session_id = $this->session->userdata( 'logged_in' );
+    	$g[ "id_jenisBarang" ] = $this->security->xss_clean( $this->input->post( 'id_jenisBarang' ) );
+    	$g[ "id_rfid" ] = $this->security->xss_clean( $this->input->post( 'id_rfid' ) );
+    	$g[ "Nama_jenis" ] = $this->security->xss_clean( $this->input->post( 'Nama_jenis' ) );
+    	return $this->db->insert( "jenis_barang", $g );
     }
 	
 	public

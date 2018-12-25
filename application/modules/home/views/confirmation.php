@@ -11,7 +11,7 @@
 							</div>
 
 							<div class="form-group form-group-feedback form-group-feedback-left">
-								<input type="text" class="form-control" placeholder="RFID" name="idRFID">
+								<input type="text" class="form-control" placeholder="RFID" name="idRFID" autocomplete="off" autofocus>
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary btn-block">Submit <i class="icon-circle-right2 ml-2"></i></button>
