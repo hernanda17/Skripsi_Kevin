@@ -275,6 +275,16 @@ class home extends MX_Controller {
 	}
 	
 	public
+	function ProsesScanBarang() {
+		$result = $this->model->ScanBarang();
+		if ( !$result ) {
+			$this->status( "Scan Barang", "Scan Barang Anda Gagal" );
+		} else {
+			$this->status( "Scan Barang", "Scan Data Barang Berhasil" );
+		}
+	}
+	
+	public
 	function prosesHapusAdmin() {
 		$result = $this->model->HapusAdmin( $this->uri->segment( 3 ));
 		if ( !$result ) {

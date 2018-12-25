@@ -148,6 +148,51 @@ Class model extends CI_Model {
 	}
 	
 	public
+	function ScanBarang() {
+		$idRfid =  $this->security->xss_clean( $this->input->post( 'idRFID' ) );
+		$idPesanan =  $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
+		//Cek Data Barang
+		if($this->CekDataJenisBarang($idRfid,$idPesanan))
+		{
+			$data = $this->getDataJenisBarang($idRfid,$idPesanan)->result_array()[0]["idPesananDetail"];
+			$dataBarang[ "status" ] = "1";
+			$this->db->where( 'idPesananDetail', $data );
+			return $this->db->update( 'pesanandetail', $dataBarang );
+		}
+		return false;
+	}
+	
+	public
+	function CekDataJenisBarang($idRfid,$idPesanan) {
+		
+	    $this->db->select(' barang.idBarang');
+		$this->db->where('jenis_barang.id_rfid', $idRfid);
+		$this->db->where('pesanandetail.idPesanan', $idPesanan);
+		$this->db->join('barang', 'barang.id_jenisBarang = jenis_barang.id_jenisBarang ', 'Inner');
+		$this->db->join('pesanandetail', 'pesanandetail.idBarang = barang.idBarang ', 'Inner');
+    	$res = $this->db->get( 'jenis_barang' );
+		$res = $res->result_array();
+		if(count($res)>0)
+			return true;
+		else 
+			return false;
+	}
+	
+	public
+	function getDataJenisBarang($idRfid,$idPesanan) {
+		
+	    $this->db->select(' pesanandetail.idPesananDetail');
+		$this->db->where('jenis_barang.id_rfid', $idRfid);
+		$this->db->where('pesanandetail.idPesanan', $idPesanan);
+		$this->db->join('barang', 'barang.id_jenisBarang = jenis_barang.id_jenisBarang ', 'Inner');
+		$this->db->join('pesanandetail', 'pesanandetail.idBarang = barang.idBarang ', 'Inner');
+    	return $this->db->get( 'jenis_barang' );
+	}
+	
+	
+	
+	
+	public
 	function HapusAdmin($idAdmin) {
 		$data[ "status" ] = "1";
 		$this->db->where( 'idUser', $idAdmin );

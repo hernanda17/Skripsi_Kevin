@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 25/12/2018 20:33:08
+ Date: 25/12/2018 23:09:26
 */
 
 SET NAMES utf8mb4;
@@ -39,9 +39,9 @@ CREATE TABLE `barang`  (
 -- ----------------------------
 -- Records of barang
 -- ----------------------------
-INSERT INTO `barang` VALUES ('1', 'barang1', 1, 0, NULL, 1, '2018-11-09 23:52:28');
-INSERT INTO `barang` VALUES ('123131', 'hehe', 12, 0, NULL, 1, '2018-11-09 19:18:16');
-INSERT INTO `barang` VALUES ('2', 'barang hehe', 10, 1, NULL, 1, '2018-11-09 23:52:45');
+INSERT INTO `barang` VALUES ('1', 'barang1', 0, 0, '3121321', 1, '2018-11-09 23:52:28');
+INSERT INTO `barang` VALUES ('123131', 'hehe', 11, 0, '89898', 1, '2018-11-09 19:18:16');
+INSERT INTO `barang` VALUES ('2', 'barang hehe', 10, 1, '89898', 1, '2018-11-09 23:52:45');
 
 -- ----------------------------
 -- Table structure for jenis_barang
@@ -59,6 +59,7 @@ CREATE TABLE `jenis_barang`  (
 -- Records of jenis_barang
 -- ----------------------------
 INSERT INTO `jenis_barang` VALUES ('3121321', '321321', '321321', 0);
+INSERT INTO `jenis_barang` VALUES ('89898', '989898', '98989', 0);
 
 -- ----------------------------
 -- Table structure for pesanan
@@ -80,8 +81,9 @@ CREATE TABLE `pesanan`  (
 -- ----------------------------
 -- Records of pesanan
 -- ----------------------------
-INSERT INTO `pesanan` VALUES ('0011321321', 2, '2018-11-10 07:18:45', 0, NULL, NULL, 'buat bangun rumah');
+INSERT INTO `pesanan` VALUES ('0011321321', 2, '2018-11-10 07:18:45', 1, 3, '2018-12-25 14:35:44', 'buat bangun rumah');
 INSERT INTO `pesanan` VALUES ('002', 2, '2018-11-22 17:55:05', 1, 3, '2018-11-23 19:47:27', 'tetetete');
+INSERT INTO `pesanan` VALUES ('004', 1, '2018-12-25 14:34:30', 1, 3, '2018-12-25 14:41:40', 'Sebelum sidang');
 
 -- ----------------------------
 -- Table structure for pesanandetail
@@ -92,20 +94,23 @@ CREATE TABLE `pesanandetail`  (
   `idPesanan` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `idBarang` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `qty` int(11) NULL DEFAULT NULL,
+  `status` int(1) NULL DEFAULT 0,
   PRIMARY KEY (`idPesananDetail`) USING BTREE,
   INDEX `idPesanan`(`idPesanan`) USING BTREE,
   INDEX `idBarang`(`idBarang`) USING BTREE,
   CONSTRAINT `pesanandetail_ibfk_1` FOREIGN KEY (`idPesanan`) REFERENCES `pesanan` (`idPesanan`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `pesanandetail_ibfk_2` FOREIGN KEY (`idBarang`) REFERENCES `barang` (`idBarang`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of pesanandetail
 -- ----------------------------
-INSERT INTO `pesanandetail` VALUES (1, '0011321321', '123131', 10);
-INSERT INTO `pesanandetail` VALUES (2, '0011321321', '1', 10);
-INSERT INTO `pesanandetail` VALUES (3, '002', '123131', 10);
-INSERT INTO `pesanandetail` VALUES (4, '002', '1', 10);
+INSERT INTO `pesanandetail` VALUES (1, '0011321321', '123131', 10, 0);
+INSERT INTO `pesanandetail` VALUES (2, '0011321321', '1', 10, 0);
+INSERT INTO `pesanandetail` VALUES (3, '002', '123131', 10, 0);
+INSERT INTO `pesanandetail` VALUES (4, '002', '1', 10, 0);
+INSERT INTO `pesanandetail` VALUES (5, '004', '1', 1, 0);
+INSERT INTO `pesanandetail` VALUES (6, '004', '123131', 1, 1);
 
 -- ----------------------------
 -- Table structure for user

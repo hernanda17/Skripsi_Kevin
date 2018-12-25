@@ -78,7 +78,7 @@
 	
 	<div class="panel panel-flat">
 	
-	<form class="login-form" action="<?php echo base_url();?>index.php/home/openPesananDetailConfirmation" method='post' name='tambahBarang'>
+	<form class="login-form" action="<?php echo base_url();?>index.php/home/ProsesScanBarang" method='post' name='tambahBarang'>
 					<div class="card mb-0">
 						<div class="card-body">
 							<div class="text-center mb-3">
@@ -88,6 +88,8 @@
 
 							<div class="form-group form-group-feedback form-group-feedback-left">
 								<input type="text" class="form-control" placeholder="RFID" name="idRFID" autocomplete="Off" autofocus>
+								<input type="hidden" name="idPesanan" value="<?php echo @$dataPesanan['idPesanan']?>">
+						
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary btn-block">Submit <i class="icon-circle-right2 ml-2"></i></button>
