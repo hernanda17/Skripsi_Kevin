@@ -77,14 +77,25 @@ Class model extends CI_Model {
 		$this->db->where('statusBarang', "0");
     	return $this->db->get( 'barang' );
     }
+	
+	public
+    function getDataBarang_pesanan($idPesanan) {
+		
+	    $this->db->select('barang.namaBarang,
+						   barang.idBarang');
+		$this->db->join('pesanandetail', 'pesanandetail.idBarang = barang.idBarang ', 'left');
+		
+		$this->db->where('pesanandetail.idBarang IS NULL', null, false);
+    	return $this->db->get( 'barang' );
+    }
 
     public
     function simpanBarang() {
     	$session_id = $this->session->userdata( 'logged_in' );
     	$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
     	$g[ "namaBarang" ] = $this->security->xss_clean( $this->input->post( 'namaBarang' ) );
-    	$g[ "stokBarang" ] = $this->security->xss_clean( $this->input->post( 'stokBarang' ) );
-    	$g[ "id_jenisBarang" ] = $this->security->xss_clean( $this->input->post( 'JenisBarang' ) );
+    	$g[ "Supplier" ] = $this->security->xss_clean( $this->input->post( 'supplier' ) );
+    	$g[ "idRFID" ] = $this->security->xss_clean( $this->input->post( 'idRFID' ) );
     	$g[ "statusBarang" ] = "0";
     	$g[ "timestamp" ] = date( 'YmdHis' );
     	$g[ "idUser" ] = $session_id[ "idUser" ];
@@ -149,17 +160,12 @@ Class model extends CI_Model {
 	
 	public
 	function ScanBarang() {
-		$idRfid =  $this->security->xss_clean( $this->input->post( 'idRFID' ) );
+		$idRfid =  $this->security->xss_clean( $this->input->post( 'idRFID_barang' ) );
 		$idPesanan =  $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
-		//Cek Data Barang
-		if($this->CekDataJenisBarang($idRfid,$idPesanan))
-		{
-			$data = $this->getDataJenisBarang($idRfid,$idPesanan)->result_array()[0]["idPesananDetail"];
-			$dataBarang[ "status" ] = "1";
-			$this->db->where( 'idPesananDetail', $data );
-			return $this->db->update( 'pesanandetail', $dataBarang );
-		}
-		return false;
+		$data = $this->getDataJenisBarang($idRfid,$idPesanan)->result_array()[0]["idBarang"];
+		$dataBarang[ "status" ] = "1";
+		$this->db->where( 'idBarang', $data );
+		return $this->db->update( 'pesanandetail', $dataBarang );
 	}
 	
 	public
@@ -181,12 +187,10 @@ Class model extends CI_Model {
 	public
 	function getDataJenisBarang($idRfid,$idPesanan) {
 		
-	    $this->db->select(' pesanandetail.idPesananDetail');
-		$this->db->where('jenis_barang.id_rfid', $idRfid);
-		$this->db->where('pesanandetail.idPesanan', $idPesanan);
-		$this->db->join('barang', 'barang.id_jenisBarang = jenis_barang.id_jenisBarang ', 'Inner');
-		$this->db->join('pesanandetail', 'pesanandetail.idBarang = barang.idBarang ', 'Inner');
-    	return $this->db->get( 'jenis_barang' );
+	    $this->db->select(' barang.idBarang');
+		$this->db->where('barang.idRFID', $idRfid);	
+		
+    	return $this->db->get( 'barang' );
 	}
 	
 	
@@ -244,19 +248,11 @@ Class model extends CI_Model {
 	
     public
     function tambahDataPesananBarang() {
-		$qty = $this->input->post( 'qty' );
 		$id= $this->input->post( 'idBarang' );
-		$dataStokBarang = (int) $this->cekStokBarang($id,$qty);
-		if($dataStokBarang >=0)
-		{
 			$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
 			$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
-			$g[ "qty" ] = $this->security->xss_clean( $this->input->post( 'qty' ) );
 			$this->db->insert( "pesanandetail", $g );
-			$this->UpdateStok($id,$dataStokBarang);
     	    return true;
-		}
-		return false;
     }
 	
 	function cekStokBarang($idBarang,$qtyMasuk){
@@ -289,7 +285,7 @@ Class model extends CI_Model {
 							pesanan.description,
 							pesanan.idUser,
 							a.username,
-							b.username "UserApproval"' );
+							b.username "UserApproval",a.idRFId' );
 		$this->db->where( 'a.idRFId', $id );
 		$this->db->where( 'pesanan.`status`', "1" );
 		$this->db->order_by( 'pesanan.`timestamp`', "ASC" );

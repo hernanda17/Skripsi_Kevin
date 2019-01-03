@@ -9,7 +9,14 @@ class home extends MX_Controller {
 		$this->load->helper( 'url' );
 		$this->load->library( 'session' );
 		$this->load->model( 'model' );
+		$this->clear_cache();
 	}
+	
+	  function clear_cache()
+    {
+        $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
+        $this->output->set_header("Pragma: no-cache");
+    }
 
 	public
 	function index() {
@@ -114,14 +121,28 @@ class home extends MX_Controller {
 	function openPesananDetail() {
 		$detailPesanan = $this->model->getDataPesananDetail( $this->uri->segment( 3 ) );
 		$detailBarang = $this->model->getDataPesananBarang( $this->uri->segment( 3 ) );
-		$barang = $this->model->getDataBarang( null );
+		$barang = $this->model->getDataBarang_pesanan($this->uri->segment( 3 ) );
 		$data[ 'pesananDetail' ] = $detailPesanan;
 		$data[ 'pesananBarang' ] = $detailBarang;
 		$data[ 'barang' ] = $barang;
+		//echo $this->db->last_query();
 		$this->load->view( 'header' );
 		$this->load->view( 'bukaPesananDetail', $data );
 	}
 
+	
+	public
+	function openPesananDetail2($idpesanan) {
+		$detailPesanan = $this->model->getDataPesananDetail( $idpesanan );
+		$detailBarang = $this->model->getDataPesananBarang( $idpesanan );
+		$barang = $this->model->getDataBarang_pesanan($idpesanan );
+		$data[ 'pesananDetail' ] = $detailPesanan;
+		$data[ 'pesananBarang' ] = $detailBarang;
+		$data[ 'barang' ] = $barang;
+		//echo $this->db->last_query();
+		$this->load->view( 'header' );
+		$this->load->view( 'bukaPesananDetail', $data );
+	}
 	public
 	function process() {
 		$result = $this->model->validate();
@@ -187,10 +208,12 @@ class home extends MX_Controller {
 
 	public
 	function openPesananDetailConfirmation() {
+		
 		$detailPesanan = $this->model->getDataPesananDetailUser();
 		$detailBarang = $this->model->getDataPesananBarangUser();
 		$data[ 'pesananDetail' ] = $detailPesanan;
 		$data[ 'pesananBarang' ] = $detailBarang;
+		$data['idRFID']= $this->input->post( 'idRFID' );
 		//echo $this->db->last_query();
 		$this->load->view( 'headerExBar' );
 		$this->load->view( 'bukaPesananDetailUser', $data );
@@ -232,14 +255,15 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->status( "Data Barang", "Stok barang tidak mencukupi" );
 		} else {
-			$this->status( "Data Barang", "Barang sudah ditambahkan" );
+			$this->openPesananDetail2($this->input->post( 'idPesanan' ));
 		}
 	}
 	
 	public
 	function do_logout() {
 		$this->session->sess_destroy();
-		$this->status( "Logout", "Logout Berhasil" 	);
+		$this->session->unset_userdata('logged_in'); 
+		$this->index();
 	}
 
 	public
@@ -280,7 +304,7 @@ class home extends MX_Controller {
 		if ( !$result ) {
 			$this->status( "Scan Barang", "Scan Barang Anda Gagal" );
 		} else {
-			$this->status( "Scan Barang", "Scan Data Barang Berhasil" );
+			$this->openPesananDetailConfirmation();
 		}
 	}
 	
@@ -340,6 +364,16 @@ class home extends MX_Controller {
 		$data['data'] = $result;
 		//$this->load->view( 'header' );
 		$this->load->view('report', $data);
+	}
+	
+	public 
+	function Report_barang()
+	{
+		$this->load->helper('pdf_helper');
+		$result = $this->model->getDataBarang("");
+		$data['data'] = $result;
+		//$this->load->view( 'header' );
+		$this->load->view('report_barang', $data);
 	}
 	
 	

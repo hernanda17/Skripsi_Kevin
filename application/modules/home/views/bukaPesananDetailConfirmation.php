@@ -56,7 +56,16 @@
 						</div>
 					</div>
 				</div>
-			</fieldset>
+				<?php $idpes =  $dataPesanan['idPesanan']?>
+				<form name="kofirmasi" action="<?php echo base_url();?>index.php/home/processKonfirmasiPesanan/<?php echo $idpes?>" method='post'>
+							
+				<button type="submit" class="btn btn-light"><i class="icon-checkmark4"></i> Konfirmasi Pesanan</button>
+				</form>
+				<form name="batal" action="<?php echo base_url();?>index.php/home/processBatalPesanan/ <?php echo $idpes?>" method='post'>
+				
+					<button type="submit" class="btn btn-light"><i class="icon-cross2"></i> Batalkan Pesanan</button>
+				</form>
+					</fieldset>
 		</div>
 	</div>
 	

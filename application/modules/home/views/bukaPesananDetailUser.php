@@ -13,6 +13,17 @@
 			?>
 			<!--Detail Pesanan-->
 			<fieldset class="content-group">
+				
+				
+				<div class="form-group row">
+					<label class="col-lg-2 col-form-label">ID RFID:</label>
+					<div class="col-lg-10">
+						<div class="form-control-plaintext">
+							<?php echo $idRFID?>
+						</div>
+					</div>
+				</div>
+				
 				<div class="form-group row">
 					<label class="col-lg-2 col-form-label">ID Pesanan:</label>
 					<div class="col-lg-10">
@@ -87,8 +98,9 @@
 							</div>
 
 							<div class="form-group form-group-feedback form-group-feedback-left">
-								<input type="text" class="form-control" placeholder="RFID" name="idRFID" autocomplete="Off" autofocus>
+								<input type="text" class="form-control" placeholder="RFID" name="idRFID_barang" autocomplete="Off" autofocus>
 								<input type="hidden" name="idPesanan" value="<?php echo @$dataPesanan['idPesanan']?>">
+								<input type="hidden" name="idRFID" value="<?php echo $idRFID?>">
 						
 							</div>
 							<div class="form-group">

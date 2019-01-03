@@ -81,6 +81,17 @@
 			<a class="heading-elements-toggle"><i class="icon-menu"></i></a>
 		</div>
 		<div class="panel panel-flat">
+			<div class="datatable-header">
+						<form class="form" action="<?php echo base_url();?>index.php/home/procesCariBarang" method='post' name='updateProfile'>
+
+							<div id="DataTables_Table_2_filter" class="dataTables_filter">
+
+								<label><span>Cari:</span> 
+									<input type="search" name="cariData" class="" placeholder="Cari data barang..." aria-controls="DataTables_Table_2">
+								</label>
+							</div>
+						</form>
+				</div>
 			<div class="table">
 				<table class="table text-nowrap">
 					<thead>
@@ -88,7 +99,6 @@
 							<th >NO</th>
 							<th >ID Barang</th>
 							<th >Nama Barang</th>
-							<th >Quantity</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -113,9 +123,6 @@
 									<?php echo $row->namaBarang;?>
 									</h6>
 							</td>
-							<td>
-									<?php echo $row->qty;?>
-							</td>
 						</tr>
 						<?php $i++;}
 					} ?>
@@ -123,7 +130,8 @@
 				</table>
 			</div>
 	</div>
-<!--Detail Barang--><div class="text-right">
+<!--Detail Barang-->
+<div class="text-right">
 			<button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal_form_inline">Tambah Barang</i></button>
 </div>
 	</div>
@@ -148,9 +156,7 @@
 								</select>
 							<input type="hidden" value="<?php echo $dataPesanan['idPesanan']; ?>" name="idPesanan">
 					
-							<label class="ml-sm-2">Quantity:</label>
-							<input type="text" placeholder="Quantity" name="qty" class="form-control mb-2 mr-sm-2 ml-sm-2 mb-sm-0">
-
+							
 							<button type="submit" class="btn bg-primary ml-sm-2 mb-sm-0">Tambah Barang <i class="icon-plus22"></i></button>
 						</form>
 					</div>

@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 25/12/2018 23:09:26
+ Date: 04/01/2019 01:36:10
 */
 
 SET NAMES utf8mb4;
@@ -24,11 +24,12 @@ DROP TABLE IF EXISTS `barang`;
 CREATE TABLE `barang`  (
   `idBarang` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `namaBarang` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `stokBarang` int(5) NULL DEFAULT NULL,
+  `idRFID` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `statusBarang` int(1) NULL DEFAULT NULL,
   `id_jenisBarang` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `idUser` int(8) NULL DEFAULT NULL,
   `timestamp` datetime(0) NULL DEFAULT NULL,
+  `Supplier` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`idBarang`) USING BTREE,
   INDEX `id_jenisBarang`(`id_jenisBarang`) USING BTREE,
   INDEX `idUser`(`idUser`) USING BTREE,
@@ -39,9 +40,10 @@ CREATE TABLE `barang`  (
 -- ----------------------------
 -- Records of barang
 -- ----------------------------
-INSERT INTO `barang` VALUES ('1', 'barang1', 0, 0, '3121321', 1, '2018-11-09 23:52:28');
-INSERT INTO `barang` VALUES ('123131', 'hehe', 11, 0, '89898', 1, '2018-11-09 19:18:16');
-INSERT INTO `barang` VALUES ('2', 'barang hehe', 10, 1, '89898', 1, '2018-11-09 23:52:45');
+INSERT INTO `barang` VALUES ('1', 'barang1', '0', 0, '3121321', 1, '2018-11-09 23:52:28', NULL);
+INSERT INTO `barang` VALUES ('123131', 'hehe', '11', 0, '89898', 1, '2018-11-09 19:18:16', NULL);
+INSERT INTO `barang` VALUES ('2', 'barang hehe', '432432432', 1, '89898', 1, '2018-11-09 23:52:45', NULL);
+INSERT INTO `barang` VALUES ('test', 'flshdisk', '1231321321', 0, NULL, 2, '2019-01-03 17:44:41', 'toko angin ribut');
 
 -- ----------------------------
 -- Table structure for jenis_barang
@@ -84,6 +86,7 @@ CREATE TABLE `pesanan`  (
 INSERT INTO `pesanan` VALUES ('0011321321', 2, '2018-11-10 07:18:45', 1, 3, '2018-12-25 14:35:44', 'buat bangun rumah');
 INSERT INTO `pesanan` VALUES ('002', 2, '2018-11-22 17:55:05', 1, 3, '2018-11-23 19:47:27', 'tetetete');
 INSERT INTO `pesanan` VALUES ('004', 1, '2018-12-25 14:34:30', 1, 3, '2018-12-25 14:41:40', 'Sebelum sidang');
+INSERT INTO `pesanan` VALUES ('432432432', 1, '2019-01-03 17:38:26', 1, 3, '2019-01-03 19:12:29', 'buat bangun rumah tangga');
 
 -- ----------------------------
 -- Table structure for pesanandetail
@@ -100,17 +103,15 @@ CREATE TABLE `pesanandetail`  (
   INDEX `idBarang`(`idBarang`) USING BTREE,
   CONSTRAINT `pesanandetail_ibfk_1` FOREIGN KEY (`idPesanan`) REFERENCES `pesanan` (`idPesanan`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `pesanandetail_ibfk_2` FOREIGN KEY (`idBarang`) REFERENCES `barang` (`idBarang`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of pesanandetail
 -- ----------------------------
-INSERT INTO `pesanandetail` VALUES (1, '0011321321', '123131', 10, 0);
-INSERT INTO `pesanandetail` VALUES (2, '0011321321', '1', 10, 0);
-INSERT INTO `pesanandetail` VALUES (3, '002', '123131', 10, 0);
-INSERT INTO `pesanandetail` VALUES (4, '002', '1', 10, 0);
-INSERT INTO `pesanandetail` VALUES (5, '004', '1', 1, 0);
-INSERT INTO `pesanandetail` VALUES (6, '004', '123131', 1, 1);
+INSERT INTO `pesanandetail` VALUES (7, '432432432', '1', NULL, 1);
+INSERT INTO `pesanandetail` VALUES (13, '432432432', '123131', NULL, 1);
+INSERT INTO `pesanandetail` VALUES (14, '432432432', '2', NULL, 1);
+INSERT INTO `pesanandetail` VALUES (15, '432432432', 'test', NULL, 1);
 
 -- ----------------------------
 -- Table structure for user

@@ -205,12 +205,21 @@
 									<i class="icon-mailbox"></i> 
 									<span>REPORT</span></a>
 								</li>
+								
+								
 								<?php }?>
 								
 								<?php 
 								if(@$role == "0")
 								{
 								?>
+								
+								
+								<li><a href="<?php echo base_url();
+									?>index.php/home/Report_barang">
+									<i class="icon-mailbox"></i> 
+									<span>REPORT BARANG</span></a>
+								</li>
 								<li><a href="<?php echo base_url();
 									?>index.php/home/confirmation">
 									<i class="icon-stack-check"></i> 

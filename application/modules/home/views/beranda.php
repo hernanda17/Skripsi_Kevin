@@ -34,29 +34,21 @@
 								<input type="text" class="form-control" name="namaBarang">
 							</div>
 						</div>
+						
+						
 						<div class="form-group">
-							<label class="control-label col-lg-2">Stok Barang : </label>
+							<label class="control-label col-lg-2">Supplier : </label>
 							<div class="col-lg-10">
-								<input type="text" class="form-control" name="stokBarang">
+								<input type="text" class="form-control" name="supplier">
 							</div>
 						</div>
 						
 						<div class="form-group">
-		                        	<label class="control-label col-lg-2">Jenis Barang : </label>
-		                        	<div class="col-lg-10">
-			                            <div class="uniform-select fixedWidth">
-										<select class="form-control form-control-uniform" data-fouc="" name="JenisBarang">
-			                               
-										   <?php if ($jenis->num_rows() > 0) {
-											$i = 1;
-											foreach ($jenis->result() as $row)	{ ?>
-														   
-										    <option value="<?php echo $row->id_jenisBarang;?>"><?php echo $row->Nama_jenis;?></option>
-											<?php }}?>
-											
-			                            </select></div>
-		                            </div>
-		                        </div>
+							<label class="control-label col-lg-2">ID RFID : </label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="idRFID">
+							</div>
+						</div>
 						
 					</fieldset>
 					<div class="text-right">
@@ -126,12 +118,12 @@
 								</label>
 							</div>
 						</form>
+					</div>
 						<table class="table text-nowrap">
 							<thead>
 								<tr>
 									<th style="width: 50px;">ID Barang</th>
 									<th style="width: 50px;">Nama Barang</th>
-									<th style="width: 50px;">Stok Barang</th>
 									<th class="text-center" style="width: 20px;">
 										<i class="icon-arrow-down12"></i>
 									</th>
@@ -154,11 +146,6 @@
 										</h6>
 										
 									</td>
-									<td class="">
-										<h6 class="no-margin"></h6>
-										<?php echo $row->stokBarang;?>
-										</h6>
-									</td>
 									<td class="text-center">
 										<ul class="icons-list">
 											<li class="dropdown">
@@ -180,7 +167,6 @@
 					} ?>
 							</tbody>
 						</table>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -210,6 +196,7 @@
 								</label>
 							</div>
 						</form>
+					</div>
 						<table class="table text-nowrap">
 							<thead>
 								<tr>
@@ -264,7 +251,6 @@
 					} ?>
 							</tbody>
 						</table>
-					</div>
 				</div>
 			</div>
 		</div>
