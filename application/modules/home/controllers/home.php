@@ -147,7 +147,7 @@ class home extends MX_Controller {
 	function process() {
 		$result = $this->model->validate();
 		if ( !$result ) {
-			$this->Login();
+			//$this->Login();
 		} else {
 			$this->load->view( 'header' );
 			$role = $this->session->userdata( 'logged_in' )[ 'role' ];
@@ -375,6 +375,17 @@ class home extends MX_Controller {
 		//$this->load->view( 'header' );
 		$this->load->view('report_barang', $data);
 	}
+	
+	public 
+	function Report_jenis()
+	{
+		$this->load->helper('pdf_helper');
+		$result = $this->model->getDataReportJenis();
+		$data['data'] = $result;
+		//$this->load->view( 'header' );
+		$this->load->view('report_jenis', $data);
+	}
+	
 	
 	
 	public

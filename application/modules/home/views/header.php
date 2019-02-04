@@ -221,6 +221,12 @@
 									<span>REPORT BARANG</span></a>
 								</li>
 								<li><a href="<?php echo base_url();
+									?>index.php/home/Report_jenis">
+									<i class="icon-mailbox"></i> 
+									<span>REPORT JENIS</span></a>
+								</li>
+								
+								<li><a href="<?php echo base_url();
 									?>index.php/home/confirmation">
 									<i class="icon-stack-check"></i> 
 									<span>CONFIRMATION</span></a>

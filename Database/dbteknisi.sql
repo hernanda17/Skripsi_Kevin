@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 04/01/2019 01:36:10
+ Date: 05/02/2019 03:29:46
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,9 @@ CREATE TABLE `barang`  (
 INSERT INTO `barang` VALUES ('1', 'barang1', '0', 0, '3121321', 1, '2018-11-09 23:52:28', NULL);
 INSERT INTO `barang` VALUES ('123131', 'hehe', '11', 0, '89898', 1, '2018-11-09 19:18:16', NULL);
 INSERT INTO `barang` VALUES ('2', 'barang hehe', '432432432', 1, '89898', 1, '2018-11-09 23:52:45', NULL);
-INSERT INTO `barang` VALUES ('test', 'flshdisk', '1231321321', 0, NULL, 2, '2019-01-03 17:44:41', 'toko angin ribut');
+INSERT INTO `barang` VALUES ('test', 'flshdisk', '1231321321', 0, '89898', 2, '2019-01-03 17:44:41', 'toko angin ribut');
+INSERT INTO `barang` VALUES ('test1', 'flshdisk', '1231321321', 0, '89898', 2, '2019-01-03 17:44:41', 'toko angin ribut');
+INSERT INTO `barang` VALUES ('test2', 'flshdisk', '1231321321', 0, '89898', 2, '2019-01-03 17:44:41', 'toko angin ribut');
 
 -- ----------------------------
 -- Table structure for jenis_barang
@@ -86,6 +88,7 @@ CREATE TABLE `pesanan`  (
 INSERT INTO `pesanan` VALUES ('0011321321', 2, '2018-11-10 07:18:45', 1, 3, '2018-12-25 14:35:44', 'buat bangun rumah');
 INSERT INTO `pesanan` VALUES ('002', 2, '2018-11-22 17:55:05', 1, 3, '2018-11-23 19:47:27', 'tetetete');
 INSERT INTO `pesanan` VALUES ('004', 1, '2018-12-25 14:34:30', 1, 3, '2018-12-25 14:41:40', 'Sebelum sidang');
+INSERT INTO `pesanan` VALUES ('3213123', 1, '2019-02-04 20:38:42', 0, NULL, NULL, '321312321');
 INSERT INTO `pesanan` VALUES ('432432432', 1, '2019-01-03 17:38:26', 1, 3, '2019-01-03 19:12:29', 'buat bangun rumah tangga');
 
 -- ----------------------------
@@ -103,7 +106,7 @@ CREATE TABLE `pesanandetail`  (
   INDEX `idBarang`(`idBarang`) USING BTREE,
   CONSTRAINT `pesanandetail_ibfk_1` FOREIGN KEY (`idPesanan`) REFERENCES `pesanan` (`idPesanan`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `pesanandetail_ibfk_2` FOREIGN KEY (`idBarang`) REFERENCES `barang` (`idBarang`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of pesanandetail
@@ -112,6 +115,8 @@ INSERT INTO `pesanandetail` VALUES (7, '432432432', '1', NULL, 1);
 INSERT INTO `pesanandetail` VALUES (13, '432432432', '123131', NULL, 1);
 INSERT INTO `pesanandetail` VALUES (14, '432432432', '2', NULL, 1);
 INSERT INTO `pesanandetail` VALUES (15, '432432432', 'test', NULL, 1);
+INSERT INTO `pesanandetail` VALUES (16, '3213123', 'test1', NULL, 0);
+INSERT INTO `pesanandetail` VALUES (17, '3213123', 'test2', NULL, 0);
 
 -- ----------------------------
 -- Table structure for user
@@ -128,7 +133,7 @@ CREATE TABLE `user`  (
   PRIMARY KEY (`idUser`) USING BTREE,
   INDEX `idUser_Atasan`(`idUser_Atasan`) USING BTREE,
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`idUser_Atasan`) REFERENCES `user` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user
@@ -138,5 +143,6 @@ INSERT INTO `user` VALUES (2, NULL, '001', 'Bagian Gudang', 'admin', 0, 0);
 INSERT INTO `user` VALUES (3, NULL, NULL, 'Kepala Teknisi', 'admin', 0, 2);
 INSERT INTO `user` VALUES (4, 1, '0007275249', 'teknisi 2', 'teknisi2', 0, 1);
 INSERT INTO `user` VALUES (5, 2, 'jkljkjfkls', 'bagian gudang3', '1234', 0, 0);
+INSERT INTO `user` VALUES (6, NULL, '', '', '', 0, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

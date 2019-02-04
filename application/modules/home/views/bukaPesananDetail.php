@@ -146,14 +146,31 @@
 							<button type="button" class="close" data-dismiss="modal">×</button>
 						</div>	
 						<form class="modal-body form-inline justify-content-center" action="<?php echo base_url();?>index.php/home/procesDataBarangPesanan" method='post' name='tambahBarang'>
-							<label>ID Barang:</label>
-								<select name="idBarang" class="form-control mb-2 mr-sm-2 ml-sm-2 mb-sm-0" data-fouc="" tabindex="-1" aria-hidden="true">
-									<?php
-							foreach ($barang->result() as $row)	{ ?>	
-									
-									<option value="<?php echo $row->idBarang; ?>"><?php echo $row->namaBarang; ?></option>
-									<?php }?>
-								</select>
+							<table class="table datatable-select-checkbox dataTable no-footer" id="DataTables_Table_3" role="grid" aria-describedby="DataTables_Table_3_info">
+						<thead>
+							<tr role="row">
+								<th>Checked</th>
+								<th>Nama Barang</th>
+						</thead>
+						<tbody>
+								<?php
+							foreach ($barang->result() as $row)	{ ?>
+						<tr role="row" class="odd">
+								<td class=" select-checkbox">
+									<div class="form-check form-check-right">
+										<label class="form-check-label">
+											<div class="uniform-checker">
+												<span class="checked">
+												<input type="checkbox" name="idBarang[]" value="<?php echo $row->idBarang; ?>" class="form-check-input-styled">
+												</span></div>
+										</label>
+									</div></td>
+							
+								<td class="sorting_1"><?php echo $row->namaBarang; ?></td>
+							</tr>
+							<?php }?>
+						</tbody>
+					</table>
 							<input type="hidden" value="<?php echo $dataPesanan['idPesanan']; ?>" name="idPesanan">
 					
 							

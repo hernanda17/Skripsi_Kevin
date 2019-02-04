@@ -1,4 +1,4 @@
-<?php
+getDataBarang<?php
 Class model extends CI_Model {
   function __construct(){
 	  parent::__construct();
@@ -39,6 +39,18 @@ Class model extends CI_Model {
 		   $this->db->join('user', 'user.idUser = barang.idUser ');
 		}
     	return $this->db->get( 'barang' );
+    }
+	
+	public
+    function getDataReportJenis() {
+		
+	    $this->db->select("jenis_barang.id_jenisBarang,
+							jenis_barang.Nama_jenis,
+							COUNT(barang.id_jenisBarang) 'Jumlah'");
+		$this->db->join('jenis_barang', 'barang.id_jenisBarang = jenis_barang.id_jenisBarang ', 'Inner');
+    	$this->db->group_by("jenis_barang.Nama_jenis"); 
+		$this->db->group_by("jenis_barang.id_jenisBarang"); 
+		return $this->db->get( 'barang' );
     }
 	
 	public
@@ -106,7 +118,6 @@ Class model extends CI_Model {
     function simpanJenis() {
     	$session_id = $this->session->userdata( 'logged_in' );
     	$g[ "id_jenisBarang" ] = $this->security->xss_clean( $this->input->post( 'id_jenisBarang' ) );
-    	$g[ "id_rfid" ] = $this->security->xss_clean( $this->input->post( 'id_rfid' ) );
     	$g[ "Nama_jenis" ] = $this->security->xss_clean( $this->input->post( 'Nama_jenis' ) );
     	return $this->db->insert( "jenis_barang", $g );
     }
@@ -248,11 +259,18 @@ Class model extends CI_Model {
 	
     public
     function tambahDataPesananBarang() {
-		$id= $this->input->post( 'idBarang' );
-			$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
-			$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
+		$id= $this->input->post( 'idPesanan' );
+		$arrId_barang = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
+		for($i = 0;$i < count($arrId_barang);$i++ )
+		{
+			$g = array();
+			$g[ "idPesanan" ] = $id;
+			$g[ "idBarang" ] = $arrId_barang[$i];
 			$this->db->insert( "pesanandetail", $g );
-    	    return true;
+		}
+		
+		
+    	return true;
     }
 	
 	function cekStokBarang($idBarang,$qtyMasuk){

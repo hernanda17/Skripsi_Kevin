@@ -50,6 +50,23 @@
 							</div>
 						</div>
 						
+						<div class="form-group">
+		                        	<label class="control-label col-lg-2">Jenis Barang : </label>
+		                        	<div class="col-lg-10">
+			                            <div class="uniform-select fixedWidth">
+										<select class="form-control form-control-uniform" data-fouc="" name="JenisBarang">
+			                               
+										   <?php if ($jenis->num_rows() > 0) {
+											$i = 1;
+											foreach ($jenis->result() as $row)	{ ?>
+														   
+										    <option value="<?php echo $row->id_jenisBarang;?>"><?php echo $row->Nama_jenis;?></option>
+											<?php }}?>
+											
+			                            </select></div>
+		                            </div>
+		                        </div>
+						
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
@@ -79,12 +96,6 @@
 							<label class="control-label col-lg-2">Nama Jenis : </label>
 							<div class="col-lg-10">
 								<input type="text" class="form-control" name="Nama_jenis">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-lg-2">ID RFID : </label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" name="id_rfid">
 							</div>
 						</div>
 					</fieldset>
