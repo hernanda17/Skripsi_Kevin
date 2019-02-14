@@ -1,4 +1,4 @@
-getDataBarang<?php
+<?php
 Class model extends CI_Model {
   function __construct(){
 	  parent::__construct();
@@ -103,6 +103,10 @@ Class model extends CI_Model {
 
     public
     function simpanBarang() {
+		
+		$temp1 = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
+		$temp2 = $this->security->xss_clean( $this->input->post( 'namaBarang' ) );
+		if((count($temp1)>0 && $temp1 != null)&&(count($temp2)>0 && $temp2 != null)){
     	$session_id = $this->session->userdata( 'logged_in' );
     	$g[ "idBarang" ] = $this->security->xss_clean( $this->input->post( 'idBarang' ) );
     	$g[ "namaBarang" ] = $this->security->xss_clean( $this->input->post( 'namaBarang' ) );
@@ -112,14 +116,21 @@ Class model extends CI_Model {
     	$g[ "timestamp" ] = date( 'YmdHis' );
     	$g[ "idUser" ] = $session_id[ "idUser" ];
     	return $this->db->insert( "barang", $g );
+		}return false;
     }
 	
 	public
     function simpanJenis() {
+		
+		$temp1 = $this->security->xss_clean( $this->input->post( 'id_jenisBarang' ) );
+		$temp2 = $this->security->xss_clean( $this->input->post( 'Nama_jenis' ) );
+		if((count($temp1)>0 && $temp1 != null)&&(count($temp2)>0 && $temp2 != null)){
     	$session_id = $this->session->userdata( 'logged_in' );
     	$g[ "id_jenisBarang" ] = $this->security->xss_clean( $this->input->post( 'id_jenisBarang' ) );
     	$g[ "Nama_jenis" ] = $this->security->xss_clean( $this->input->post( 'Nama_jenis' ) );
     	return $this->db->insert( "jenis_barang", $g );
+		}
+			return false;
     }
 	
 	public
@@ -135,13 +146,18 @@ Class model extends CI_Model {
 	
 	public
     function kirimPesan() {
-    	$session_id = $this->session->userdata( 'logged_in' );
-    	$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
-    	$g[ "description" ] = $this->security->xss_clean( $this->input->post( 'description' ) );
-    	$g[ "status" ] = "0";
-    	$g[ "timestamp" ] = date( 'YmdHis' );
-    	$g[ "idUser" ] = $session_id[ "idUser" ];
-    	return $this->db->insert( "pesanan", $g );
+		$temp1 = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
+		$temp2 = $this->security->xss_clean( $this->input->post( 'description' ) );
+		if((count($temp1)>0 && $temp1 != null)&&(count($temp2)>0 && $temp2 != null)){
+			$session_id = $this->session->userdata( 'logged_in' );
+			$g[ "idPesanan" ] = $this->security->xss_clean( $this->input->post( 'idPesanan' ) );
+			$g[ "description" ] = $this->security->xss_clean( $this->input->post( 'description' ) );
+			$g[ "status" ] = "0";
+			$g[ "timestamp" ] = date( 'YmdHis' );
+			$g[ "idUser" ] = $session_id[ "idUser" ];
+			return $this->db->insert( "pesanan", $g );
+		}
+			return false;
     }
 	
 	public
@@ -224,6 +240,8 @@ Class model extends CI_Model {
 		   $this->db->where('idPesanan', $idPesanan);
 		   //$this->db->join('user', 'user.idUser = barang.idUser ');
 		}
+		
+		   $this->db->order_by('timestamp', 'DESC');
     	return $this->db->get( 'pesanan' );
     }
 	

@@ -44,13 +44,6 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-lg-2">ID RFID : </label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" name="idRFID">
-							</div>
-						</div>
-						
-						<div class="form-group">
 		                        	<label class="control-label col-lg-2">Jenis Barang : </label>
 		                        	<div class="col-lg-10">
 			                            <div class="uniform-select fixedWidth">
@@ -66,6 +59,14 @@
 			                            </select></div>
 		                            </div>
 		                        </div>
+						
+						
+						<div class="form-group">
+							<label class="control-label col-lg-2">ID RFID : </label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="idRFID">
+							</div>
+						</div>
 						
 					</fieldset>
 					<div class="text-right">
@@ -135,6 +136,8 @@
 								<tr>
 									<th style="width: 50px;">ID Barang</th>
 									<th style="width: 50px;">Nama Barang</th>
+									<th style="width: 50px;">Supplier</th>
+									<th style="width: 50px;">Tanggal Masuk</th>
 									<th class="text-center" style="width: 20px;">
 										<i class="icon-arrow-down12"></i>
 									</th>
@@ -157,6 +160,23 @@
 										</h6>
 										
 									</td>
+			
+			
+									<td class="">
+										<h6 class="no-margin"></h6>
+										<?php echo $row->Supplier;?>
+										</h6>
+										
+									</td>
+									<td class="">
+										<h6 class="no-margin"></h6>
+										<?php echo $row->timestamp;?>
+										</h6>
+										
+									</td>
+			
+			
+										
 									<td class="text-center">
 										<ul class="icons-list">
 											<li class="dropdown">
@@ -213,7 +233,7 @@
 								<tr>
 									<th style="width: 50px;">ID Jenis</th>
 									<th style="width: 50px;">Nama Jenis</th>
-									<th style="width: 50px;">ID RFID</th>
+									<th style="width: 50px;">Stok</th>
 									<th class="text-center" style="width: 20px;">
 										<i class="icon-arrow-down12"></i>
 									</th>
@@ -238,7 +258,7 @@
 									</td>
 									<td class="">
 										<h6 class="no-margin"></h6>
-										<?php echo $row->id_rfid;?>
+										<?php echo $row->Jumlah;?>
 										</h6>
 									</td>
 									<td class="text-center">

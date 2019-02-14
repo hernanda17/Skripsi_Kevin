@@ -203,14 +203,14 @@
 								<li><a href="<?php echo base_url();
 									?>index.php/home/Report">
 									<i class="icon-mailbox"></i> 
-									<span>REPORT</span></a>
+									<span>REPORT BARANG MASUK</span></a>
 								</li>
 								
 								
 								<?php }?>
 								
 								<?php 
-								if(@$role == "0")
+								if(@$role == "0"||@$role == "2")
 								{
 								?>
 								
@@ -218,12 +218,12 @@
 								<li><a href="<?php echo base_url();
 									?>index.php/home/Report_barang">
 									<i class="icon-mailbox"></i> 
-									<span>REPORT BARANG</span></a>
+									<span>REPORT BARANG KELUAR</span></a>
 								</li>
 								<li><a href="<?php echo base_url();
 									?>index.php/home/Report_jenis">
 									<i class="icon-mailbox"></i> 
-									<span>REPORT JENIS</span></a>
+									<span>REPORT STOK BARANG</span></a>
 								</li>
 								
 								<li><a href="<?php echo base_url();

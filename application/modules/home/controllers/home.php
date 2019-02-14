@@ -25,7 +25,7 @@ class home extends MX_Controller {
 			$role = $this->session->userdata( 'logged_in' )[ 'role' ];
 			if ( $role == "0" ) {
 				$barang = $this->model->getDataBarang(null);
-				$jenis = $this->model->getDataJenis(null);
+				$jenis = $this->model->getDataReportJenis(null);
 				$data[ 'barang' ] = $barang;
 				$data[ 'jenis' ] = $jenis;
 			} else if ( $role == "1" ){
@@ -147,7 +147,7 @@ class home extends MX_Controller {
 	function process() {
 		$result = $this->model->validate();
 		if ( !$result ) {
-			//$this->Login();
+			$this->status( "Login Failed", "Username atau Sassword salah" );
 		} else {
 			$this->load->view( 'header' );
 			$role = $this->session->userdata( 'logged_in' )[ 'role' ];
@@ -171,7 +171,7 @@ class home extends MX_Controller {
 	function processKirimPesan() {
 		$result = $this->model->kirimPesan();
 		if ( !$result ) {
-			$this->status( "Kirim Pesan", "Kirim Pesan Gagal (ID pesanan telah digunakan)" );
+			$this->status( "Kirim Pesan", "Data yang di inputkan salah" );
 		} else {
 			$this->status( "Kirim Pesan", "Pesanan telah berhasil dibuat dan menunggu konfirmasi" );
 		}
